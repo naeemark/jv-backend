@@ -1,0 +1,66 @@
+{
+  "name": "jv-backend",
+  "version": "1.0.0",
+  "description": "A REST-API for JV Mobile application",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env node src/index.js",
+    "dev": "NODE_ENV=dev nodemon src/index.js",
+    "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles --coverage --coverageDirectory=coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naeemark/jv-backend.git"
+  },
+  "keywords": [
+    "React",
+    "Express",
+    "NodeJS",
+    "Jest",
+    "Jest-extended"
+  ],
+  "author": "Naeem",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naeemark/jv-backend/issues"
+  },
+  "homepage": "",
+  "dependencies": {
+    
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.1",
+    "cors": "^2.8.5",
+    "cross-env": "^6.0.3",
+    "dotenv-safe": "^8.2.0",
+    "es-class": "^2.1.1",
+    "express": "^4.17.1",
+    "express-validation": "^1.0.3",
+    "http-status": "^1.4.2",
+    "joi": "^14.3.1",
+    "node-gyp": "^6.0.1",
+    "node-sanitizer": "^1.0.5",
+    "rebuild": "^0.1.2",
+    "response-time": "^2.3.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "jest-dom": "^4.0.0",
+    "jest-express": "^1.10.1",
+    "jest-extended": "^0.11.2",
+    "jest-tobetype": "^1.2.3",
+    "mock-express-request": "^0.2.2",
+    "mock-express-response": "^0.2.2",
+    "mockgoose": "^8.0.4",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ],
+    "testEnvironment": "node"
+  }
+}
