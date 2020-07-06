@@ -18,8 +18,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install --pure-lockfile
-      - run: yarn test
+
+      - name: Install yarn
+        run: yarn install --pure-lockfile
+
+      - name: Run Tests
+        run: yarn test
+        env:
+          PORT: 5000
+
       - run: |
           sed -i 's+/home/runner/work/jv-backend/jv-backend+/github/workspace+g' coverage/lcov.info
 
