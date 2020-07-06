@@ -8,7 +8,7 @@ exports.health = async (req, res, next) => {
   res.status(httpStatus.OK);
   return res.json({
     responseCode: httpStatus.OK,
-    responseMessage: 'OK',
-    response: {}
+    responseMessage: 'Health is OK',
+    response: null
   });
 };
