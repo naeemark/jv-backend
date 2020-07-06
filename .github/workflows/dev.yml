@@ -27,7 +27,8 @@ jobs:
         env:
           PORT: 5000
 
-      - run: |
+      - name: Export Coverage Report
+        run: |
           sed -i 's+/home/runner/work/jv-backend/jv-backend+/github/workspace+g' coverage/lcov.info
 
       - name: SonarCloud Scan
