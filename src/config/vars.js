@@ -1,9 +1,7 @@
 const path = require('path');
 
 // import .env variables
-require('dotenv-safe').config({
-  example: process.env.CI ? '.env.ci.example' : '.env.example'
-});
+if (process.env.NODE_ENV !== test) require('dotenv-safe').config();
 
 module.exports = {
   env: process.env.NODE_ENV,
