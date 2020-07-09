@@ -25,7 +25,6 @@ exports.start = async (req, res, next) => {
   return res.json({
     responseCode: httpStatus.OK,
     responseMessage: 'OK',
-    response: response,
-    time: new Date()
+    response: response
   });
 };
