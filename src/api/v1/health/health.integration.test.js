@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 const request = require('supertest');
 const httpStatus = require('http-status');
-const app = require('../../../config/express');
+const app = require('@config/app');
 
 describe('POST /api/v1/health', () => {
   let body;

@@ -1,6 +1,10 @@
 const winston = require('winston');
+const WinstonCloudWatch = require('winston-cloudwatch');
 const sanitizer = require('node-sanitizer');
-const { serviceName, sanitizedFields } = require('../../config/vars');
+const uuidv4 = require('uuid/v4');
+const {
+  env, serviceName, elasticLog, sanitizedFields
+} = require('@config/vars');
 
 const {
   combine,
@@ -22,10 +26,21 @@ const options = {
   }
 };
 
-const transports = [new winston.transports.Console(options.console)];
+const transports = [
+  new winston.transports.Console(options.console),
+  new WinstonCloudWatch({
+    logGroupName: serviceName,
+    logStreamName: `${process.env.NODE_ENV}-${process.env.POD_NAME}`,
+    createLogGroup: true,
+    createLogStream: true,
+    handleExceptions: true,
+    jsonMessage: true,
+    awsRegion: process.env.AWS_DEFAULT_REGION
+  })
+];
 
 // instantiate a new Winston Logger with the settings defined above
-const logger = winston.loggers.add(process.env.NODE_ENV, {
+const logger = winston.loggers.add(env, {
   transports
 });
 
@@ -50,36 +65,38 @@ logger.streamError = {
 
 /**
  * Debug Log
- * @param {String} methodName Method's name
- * @param {String} message    Debug message
- * @param {Object} data       Debug data
+ * @param {String} message    Info message
+ * @param {Object} logData       Info data
  */
-const debug = (methodName, message, data) => {
-  const logData = {
-    serviceName,
-    methodName,
-    data,
-    message
-  };
-  logger.debug(message, logData);
+const debug = (message, logData) => {
+  logger.info(message, logData);
 };
 
 /**
  * Warn Log
- * @param {String} methodName   Method's name
- * @param {String} message      Warn message
- * @param {Object} data         Warn data
- * @param {Object} error        Error
+ * @param {String} message       Error message
+ * @param {Object} logData       Error data
  */
-const warn = (methodName, message, data, error) => {
-  const logData = {
-    serviceName,
-    methodName,
-    data,
-    message,
-    error
-  };
-  logger.warn(message, logData);
+const warn = (message, logData) => {
+  logger.error(message, logData);
+};
+
+/**
+ * Info Log
+ * @param {String} message    Info message
+ * @param {Object} logData       Info data
+ */
+const info = (message, logData) => {
+  logger.info(message, logData);
+};
+
+/**
+ * Error Log
+ * @param {String} message       Error message
+ * @param {Object} logData       Error data
+ */
+const error = (message, logData) => {
+  logger.error(message, logData);
 };
 
 /**
@@ -88,30 +105,23 @@ const warn = (methodName, message, data, error) => {
  * @param {Object} error        Error's data
  * @param {String} methodName   Method's name
  */
-const captureError = (title, error, methodName) => {
-  // Uncomment the following line if you use elastic APM
-  // apm.captureError(error);
-
+const captureError = (title, err, methodName) => {
   const logData = {
     serviceName,
     methodName,
-    error: error.message
+    error: err.message
   };
-
-  if (error.stack) {
-    logData.stack = error.stack;
-  }
-
-  if (error.response && error.response.data) {
-    logData.response = error.response.data;
+  if (err.stack) {
+    logData.stack = err.stack;
   }
   logger.error(title, logData);
 };
 
-
 module.exports = {
   logger,
+  info,
   debug,
   warn,
+  error,
   captureError
 };

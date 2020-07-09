@@ -1,8 +1,9 @@
+require('module-alias/register');
 const async = require('async');
 
 // make bluebird default Promise
 Promise = require('bluebird'); // eslint-disable-line no-global-assign
-const app = require('./config/express');
+const app = require('@config/app');
 const startupBoot = require('./boot');
 const { logger } = require('./utils/logger');
 

@@ -1,13 +1,3 @@
-const {
-  logger,
-  debug,
-  warn,
-  captureError
-} = require('./logger');
+const logger = require('./logger');
 
-module.exports = {
-  logger,
-  debug,
-  warn,
-  captureError
-};
+module.exports = logger;

@@ -10,14 +10,10 @@ describe('Utility - logger', () => {
   const req = request;
   let infoSpy;
   let errorSpy;
-  let debugSpy;
-  let warnSpy;
 
   beforeEach(() => {
     infoSpy = jest.spyOn(util.logger, 'info');
     errorSpy = jest.spyOn(util.logger, 'error');
-    debugSpy = jest.spyOn(util.logger, 'debug');
-    warnSpy = jest.spyOn(util.logger, 'warn');
   });
 
   afterEach(() => {
@@ -36,16 +32,22 @@ describe('Utility - logger', () => {
     expect(errorSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('should write info log', () => {
+    util.info('method', 'message', { data: 1 });
+
+    expect(infoSpy).toHaveBeenCalledTimes(1);
+  });
+
   it('should write debug log', () => {
     util.debug('method', 'message', { data: 1 });
 
-    expect(debugSpy).toHaveBeenCalledTimes(1);
+    expect(infoSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should write warn log', () => {
     util.warn('method', 'message', {}, {});
 
-    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should capture error', () => {
