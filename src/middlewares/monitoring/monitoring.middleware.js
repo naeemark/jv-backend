@@ -22,7 +22,7 @@ const monitoringMiddleware = responseTime((req, res, time) => {
       params: req.query
     },
     response: {
-      header: res.header()._headers,
+      header: res.getHeaders(),
       body: req.responseBody
     },
     requestTime: Math.round((now - time) * 10) / 10,

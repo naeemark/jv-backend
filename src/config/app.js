@@ -3,8 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const api = require('../api');
-const { errorMiddleware } = require('../middlewares/error');
-const middlewareMonitoring = require('../middlewares/monitoring');
+const interceptor = require('express-interceptor');
+const { errorMiddleware } = require('@middlewares/error');
+const middlewareMonitoring = require('@middlewares/monitoring');
 
 /**
 * Express instance
@@ -21,6 +22,22 @@ app.use(cors());
 
 // Monitoring
 app.use(middlewareMonitoring);
+
+const finalParagraphInterceptor = interceptor((req, res) => { // eslint-disable-line
+  return {
+    isInterceptable: () => true,
+    intercept: (body, send) => {
+      try {
+        req.responseBody = JSON.parse(body);
+      } catch (e) {
+        req.responseBody = body;
+      }
+      send(body);
+    }
+  };
+});
+
+app.use(finalParagraphInterceptor);
 
 //Health status
 const healthRoute = express.Router();

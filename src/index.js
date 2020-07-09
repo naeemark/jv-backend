@@ -5,7 +5,7 @@ const async = require('async');
 Promise = require('bluebird'); // eslint-disable-line no-global-assign
 const app = require('@config/app');
 const startupBoot = require('./boot');
-const { logger } = require('./utils/logger');
+const { logger } = require('@utils/logger');
 
 const startupTasks = [];
 startupBoot.forEach((boot) => {

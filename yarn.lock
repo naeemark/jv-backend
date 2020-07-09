@@ -1790,6 +1790,13 @@ expect@^24.1.0, expect@^24.9.0:
     jest-message-util "^24.9.0"
     jest-regex-util "^24.9.0"
 
+express-interceptor@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/express-interceptor/-/express-interceptor-1.2.0.tgz#33460a8e11dce7e5a022caf555d377e45ddb822a"
+  integrity sha1-M0YKjhHc5+WgIsr1VdN35F3bgio=
+  dependencies:
+    debug "^2.2.0"
+
 express-validation@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/express-validation/-/express-validation-1.0.3.tgz#677261e65f27f4e869c98dedc7934da6bbefaa8f"

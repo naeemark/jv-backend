@@ -3,8 +3,8 @@
  *
  */
 
-const { logger } = require('../../utils/logger');
-const { port, env } = require('../../config/vars');
+const { logger } = require('@utils/logger');
+const { port, env } = require('@config/vars');
 
 const serverBoot = (app, next) => {
   logger.info('Starting server...');
