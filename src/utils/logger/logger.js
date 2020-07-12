@@ -26,6 +26,14 @@ const options = {
   }
 };
 
+// Adds custom format
+const format = combine(
+  winston.format(info => {
+    info.level = `${info.level.toUpperCase()}:${serviceName}-${env}`
+    return info;
+  })()
+);
+
 const transports = [
   new winston.transports.Console(options.console),
   new WinstonCloudWatch({
@@ -41,6 +49,7 @@ const transports = [
 
 // instantiate a new Winston Logger with the settings defined above
 const logger = winston.loggers.add(env, {
+  format,
   transports
 });
 
