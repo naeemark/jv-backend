@@ -2,11 +2,11 @@
 const service = require('./user.service');
 
 describe('Service - user', () => {
-  beforeEach(() => {});
+  beforeEach(() => { });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   it('TODO: should do unit test for ', () => {
-    service();
+    service.userService();
   });
 });

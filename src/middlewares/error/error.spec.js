@@ -52,15 +52,10 @@ describe('Middleware - error', () => {
     const apiError = convertValidationError(validationError, req);
 
     expect(apiError).toHaveProperty('name');
-    expect(apiError).toHaveProperty('errors');
     expect(apiError).toHaveProperty('status');
-    expect(apiError).toHaveProperty('errors');
-    expect(apiError).toHaveProperty('isPublic');
-    expect(apiError).toHaveProperty('route');
-    expect(apiError).toHaveProperty('isOperational');
+    expect(apiError).toHaveProperty('error');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.BAD_REQUEST);
-    expect(apiError.route).toBe(route);
   });
 
   it('should convert validation error into API error with default route', () => {
@@ -70,15 +65,10 @@ describe('Middleware - error', () => {
     const apiError = convertValidationError(validationError, req);
 
     expect(apiError).toHaveProperty('name');
-    expect(apiError).toHaveProperty('errors');
     expect(apiError).toHaveProperty('status');
-    expect(apiError).toHaveProperty('errors');
-    expect(apiError).toHaveProperty('isPublic');
-    expect(apiError).toHaveProperty('route');
-    expect(apiError).toHaveProperty('isOperational');
+    expect(apiError).toHaveProperty('error');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.BAD_REQUEST);
-    expect(apiError.route).toBe('default');
   });
 
   it('should convert generic error into API error', () => {
@@ -87,12 +77,8 @@ describe('Middleware - error', () => {
 
     const apiError = convertGenericError(error, req);
     expect(apiError).toHaveProperty('name');
-    expect(apiError).toHaveProperty('errors');
     expect(apiError).toHaveProperty('status');
-    expect(apiError).toHaveProperty('errors');
-    expect(apiError).toHaveProperty('isPublic');
-    expect(apiError).toHaveProperty('route');
-    expect(apiError).toHaveProperty('isOperational');
+    expect(apiError).toHaveProperty('error');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.INTERNAL_SERVER_ERROR);
   });
@@ -101,12 +87,8 @@ describe('Middleware - error', () => {
   it('should generate Not Found API error', () => {
     const apiError = generateNotFoundError();
     expect(apiError).toHaveProperty('name');
-    expect(apiError).toHaveProperty('errors');
     expect(apiError).toHaveProperty('status');
-    expect(apiError).toHaveProperty('errors');
-    expect(apiError).toHaveProperty('isPublic');
-    expect(apiError).toHaveProperty('route');
-    expect(apiError).toHaveProperty('isOperational');
+    expect(apiError).toHaveProperty('error');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.NOT_FOUND);
   });

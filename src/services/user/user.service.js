@@ -34,4 +34,5 @@ const registerUser = async (authorization, userData) => {
   }
 };
 
-module.exports = { registerUser };
+const userService = () => { };
+module.exports = { userService, registerUser };
