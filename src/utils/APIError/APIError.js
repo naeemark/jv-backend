@@ -8,34 +8,20 @@ const appErrorCode = require('./ErrorCode');
  * @param {String} errTitle       Title
  * @param {String} errDesc        Description
  */
-const generateError = (errorCode, errorTitle, errorDescription) => {
-  const result = { errorCode, errorTitle, errorDescription };
-  return result;
-};
+const generateError = (errorCode, errorTitle, errorDescription) => { errorCode, errorTitle, errorDescription };
+
 
 /**
  * @extends Error
  */
 const ExtendableError = Class({
   extends: Error,
-  constructor({
-    // eslint-disable-line
-    message,
-    errors,
-    route,
-    status,
-    isPublic,
-    stack
-  }) {
+  constructor({ message, status, error }) {
     this.super(message);
     this.name = this.constructor.name;
     this.message = message || 'Oops! Something is wrong';
-    this.errors = errors;
     this.status = status;
-    this.isPublic = isPublic;
-    this.route = route;
-    this.isOperational = true; // This is required since bluebird 4 doesn't append it anymore.
-    this.stack = stack;
+    this.error = error;
   }
 });
 
@@ -50,24 +36,15 @@ class APIError extends ExtendableError {
    * @param {number} status - HTTP status code of error.
    * @param {boolean} isPublic - Whether the message should be visible to user or not.
    */
-  constructor({
-    message, errors, route = 'default', stack, status = httpStatus.INTERNAL_SERVER_ERROR, isPublic = false
-  }) {
-    super({
-      message,
-      errors,
-      route,
-      status,
-      isPublic,
-      stack
-    });
+  constructor({ message, status = httpStatus.INTERNAL_SERVER_ERROR, error }) {
+    super({ message, status, error });
   }
 
   static errorVerifyEmail() {
     return new APIError({
       message: 'Error Verify Email',
       status: httpStatus.ORIGIN_IS_UNREACHABLE,
-      errors: [generateError('ORIGIN_IS_UNREACHABLE', 'Oops! Something is wrong', 'The verification was not successful!')]
+      error: generateError('ORIGIN_IS_UNREACHABLE', 'Oops! Something is wrong', 'The verification was not successful!')
     });
   }
 
@@ -75,7 +52,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Error Verify Email',
       status: httpStatus.FORBIDDEN,
-      errors: [generateError('FORBIDDEN', 'Oops! Something is wrong', 'The user email is already verified!')]
+      error: generateError('FORBIDDEN', 'Oops! Something is wrong', 'The user email is already verified!')
     });
   }
 
@@ -83,7 +60,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Resource not found!',
       status: httpStatus.NOT_FOUND,
-      errors: [generateError('NOT_FOUND', 'Oops! Something is wrong', 'The resource you are looking for does not exist!')]
+      error: generateError('NOT_FOUND', 'Oops! Something is wrong', 'The resource you are looking for does not exist!')
     });
   }
 
@@ -91,7 +68,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Resource not Updated!',
       status: httpStatus.NOT_MODIFIED,
-      errors: [generateError('NOT_MODIFIED', 'Oops! Something is wrong', 'The resource is not updated!')]
+      error: generateError('NOT_MODIFIED', 'Oops! Something is wrong', 'The resource is not updated!')
     });
   }
 
@@ -99,7 +76,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'User not found!',
       status: httpStatus.NOT_FOUND,
-      errors: [generateError('USER_NOT_FOUND', 'Oops! Something is wrong', 'The user you are looking for does not exist!')]
+      error: generateError('USER_NOT_FOUND', 'Oops! Something is wrong', 'The user you are looking for does not exist!')
     });
   }
 
@@ -107,7 +84,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'User already exits!',
       status: httpStatus.CONFLICT,
-      errors: [generateError('USER_CONFLICT', 'Oops! Something is wrong', 'Can not create new user with these attributes!')]
+      error: generateError('USER_CONFLICT', 'Oops! Something is wrong', 'Can not create new user with these attributes!')
     });
   }
 
@@ -115,7 +92,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Password does not match!',
       status: httpStatus.UNAUTHORIZED,
-      errors: [generateError('UNAUTHORIZED', 'Invalid Password', 'Wrong password was supplied!')]
+      error: generateError('UNAUTHORIZED', 'Invalid Password', 'Wrong password was supplied!')
     });
   }
 
@@ -123,7 +100,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Request forbidden!',
       status: httpStatus.FORBIDDEN,
-      errors: [generateError('FORBIDDEN', 'Oops! Something is wrong', 'This resource is forbidden')]
+      error: generateError('FORBIDDEN', 'Oops! Something is wrong', 'This resource is forbidden')
     });
   }
 
@@ -132,7 +109,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Social Auth Failed!',
       status: httpStatus.PRECONDITION_FAILED,
-      errors: [generateError('PRECONDITION_FAILED', 'Oops! Something is wrong', message)]
+      error: generateError('PRECONDITION_FAILED', 'Oops! Something is wrong', message)
     });
   }
 
@@ -140,7 +117,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Request Unauthorized!',
       status: httpStatus.UNAUTHORIZED,
-      errors: [generateError('UNAUTHORIZED', 'Oops! Something is wrong', 'You are not authorized for the action')]
+      error: generateError('UNAUTHORIZED', 'Oops! Something is wrong', 'You are not authorized for the action')
     });
   }
 
@@ -148,7 +125,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Request Unauthorized!',
       status: httpStatus.UNAUTHORIZED,
-      errors: [generateError('UNAUTHORIZED', 'Oops! Something is wrong', 'This Request is supposed to be made with Refresh Token')]
+      error: generateError('UNAUTHORIZED', 'Oops! Something is wrong', 'This Request is supposed to be made with Refresh Token')
     });
   }
 
@@ -163,7 +140,7 @@ class APIError extends ExtendableError {
     if (errorCode === 'UNSPECIFIED') {
       errAttributes.missingCode = code;
     }
-    const errors = [generateError(errorCode, _error.errTitle, _error.errDesc)];
+    const errors = generateError(errorCode, _error.errTitle, _error.errDesc);
     return new APIError({ message: _error.errTitle, status: status || 400, errors });
   }
 }
