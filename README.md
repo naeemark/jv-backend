@@ -82,8 +82,9 @@ Set environment variables:
 
 ### Postman Environments
 
-- [DEV](https://www.dropbox.com/s/vm28egqolcdxwqc/%5Benv-dev%5D%20jointventure%20backend.postman_environment.json?dl=0)
-- [PROD](https://www.dropbox.com/s/g0jxraxemgs3cef/%5Benv-prod%5D%20jointventure%20backend.postman_environment.json?dl=0)
+- [DEV](https://www.dropbox.com/s/b9me8a6ufhw0c3o/%5Benv-dev%5D%20jv%20backend.postman_environment.json?dl=0)
+- [PROD](https://www.dropbox.com/s/pg55b78cd49icyx/%5Benv-prod%5D%20jv%20backend.postman_environment.json?dl=0)
+
 
 ### Postman Collection
 
