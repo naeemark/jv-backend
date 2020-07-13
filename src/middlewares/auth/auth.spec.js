@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const MockReq = require('mock-express-request');
 const MockRes = require('mock-express-response');
 const httpStatus = require('http-status');
-const { jwtTokenSecret } = require('@config/vars');
+const { jwtSetting: { jwtTokenSecret } } = require('@config/vars');
 const { authMiddleware } = require('./auth.middleware');
 
 describe('Middleware - authMiddleware', () => {
@@ -47,15 +47,8 @@ describe('Middleware - authMiddleware', () => {
   });
 
   it('should validate the authorization token', (done) => {
-    const accessToken = jwt.sign({
-      sessionToken: 'asd',
-      user: {
-        name: test
-      }
-    }, jwtTokenSecret, { expiresIn: '1h' });
-    const req = new MockReq({
-      headers: { authorization: `Bearer ${accessToken}` }
-    });
+    const accessToken = jwt.sign({ user: { name: test } }, jwtTokenSecret, { expiresIn: '1h' });
+    const req = new MockReq({ headers: { authorization: accessToken } });
     return authMiddleware(req, res, () => {
       done();
     });
