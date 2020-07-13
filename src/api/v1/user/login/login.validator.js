@@ -5,7 +5,11 @@ module.exports = {
   path: '/api/v1/login',
   type: 'post',
   joiSchema: {
-    body: {},
+    body: Joi.object({
+      email: Joi.string().email().required().strict(),
+      password: Joi.string().min(6).required().strict(),
+      userType: Joi.string().valid(['Merchant', 'Consumer']).default('Consumer')
+    }).options({ stripUnknown: true }),
     response: {
       200: {
         description: 'OK',

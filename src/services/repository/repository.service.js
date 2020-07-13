@@ -11,7 +11,9 @@ const createUser = async ({ email, name, password, userType }) => {
   try {
     const entitySortKey = `#USR-EMAIL#${email}`;
     await User.create({ entitySortKey, email, name, password, userType });
-    return await getUser({ email });
+    const user = await getUser({ email });
+    delete user.password;
+    return user;
   } catch (error) {
     console.error(error);
     // throw APIError.unauthorized();
@@ -26,7 +28,6 @@ const getUser = async ({ email }) => {
     const user = await User.get({ entityHashKey, entitySortKey });
     delete user.entityHashKey;
     delete user.entitySortKey;
-    delete user.password;
     console.log(user);
     return user;
   } catch (error) {

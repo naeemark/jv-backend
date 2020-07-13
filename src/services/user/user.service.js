@@ -34,5 +34,25 @@ const registerUser = async (authorization, userData) => {
   }
 };
 
+
+const loginUser = async (authorization, userData) => {
+
+  const {
+    email,
+    password,
+  } = userData;
+
+  const hashedPassword = auth.sha256(password);
+  const { deviceId } = await auth.verifyToken(authorization);
+
+  const user = await getUser({ email });
+
+  if (user && user.password === hashedPassword) {
+    delete user.password;
+    const { accessToken, refreshToken } = await auth.generateAuthToken({ user, deviceId });
+    return { accessToken, refreshToken, user };
+  }
+};
+
 const userService = () => { };
-module.exports = { userService, registerUser };
+module.exports = { userService, registerUser, loginUser };

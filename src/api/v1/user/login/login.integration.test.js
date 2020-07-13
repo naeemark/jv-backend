@@ -10,18 +10,25 @@ describe('POST /api/v1/user/login', () => {
     body = {};
   });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
-  it('should integrate api /user/login', () => {
+  it('should integrate api /user/login without authorization', () => {
     return request(app)
       .post('/api/v1/user/login')
       .send(body)
-      .expect(httpStatus.OK)
-      .then((res) => {
-        expect(res.body).toHaveProperty('responseCode');
-        expect(res.body).toHaveProperty('responseMessage');
-        expect(res.body.responseCode).toBe(200);
-        expect(res.body.responseMessage).not.toBe(undefined);
-      });
+      .expect(httpStatus.BAD_REQUEST);
   });
+
+  // it('should integrate api /user/login', () => {
+  //   return request(app)
+  //     .post('/api/v1/user/login')
+  //     .send(body)
+  //     .expect(httpStatus.OK)
+  //     .then((res) => {
+  //       expect(res.body).toHaveProperty('responseCode');
+  //       expect(res.body).toHaveProperty('responseMessage');
+  //       expect(res.body.responseCode).toBe(200);
+  //       expect(res.body.responseMessage).not.toBe(undefined);
+  //     });
+  // });
 });
