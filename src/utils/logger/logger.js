@@ -1,9 +1,8 @@
 const winston = require('winston');
 const WinstonCloudWatch = require('winston-cloudwatch');
 const sanitizer = require('node-sanitizer');
-const uuidv4 = require('uuid/v4');
 const {
-  env, serviceName, elasticLog, sanitizedFields
+  env, serviceName, sanitizedFields
 } = require('@config/vars');
 
 const {
