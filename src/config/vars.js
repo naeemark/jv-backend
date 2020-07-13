@@ -11,7 +11,7 @@ module.exports = {
   jwtSetting: {
     accessTokenExpiryTime: process.env.JWT_EXPIRATION_TIME,
     refreshTokenExpiryTime: process.env.JWT_REFRESH_EXPIRATION_TIME,
-    jwtSecretToken: process.env.JWT_SECRET
+    jwtTokenSecret: process.env.JWT_SECRET
   },
   http: {
     timeout: 5000,

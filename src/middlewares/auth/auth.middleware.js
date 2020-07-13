@@ -6,7 +6,8 @@ const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const { APIError } = require('@utils/APIError');
 const { errorMiddleware } = require('@middlewares/error');
-const { jwtTokenSecret, serviceTokenSecret } = require('@config/vars');
+const { jwtTokenSecret } = require('@config/vars');
+const { auth } = require('@utils/auth');
 const { logger } = require('@utils/logger');
 
 /**
@@ -16,25 +17,26 @@ const { logger } = require('@utils/logger');
  * @param {Func} next           Next Object
  */
 const authMiddleware = async (req, res, next) => {
-  logger.error('here')
   const unauthorized = () => {
     const err = APIError.withCode('UNAUTHORIZED', 401);
     return errorMiddleware.converter(err, req, res, next);
   };
-  const serviceToken = req.headers['x-service-token'];
-  if (!_.isNil(serviceToken) && serviceToken === serviceTokenSecret) {
-    req.user = {};
-    return next();
-  }
+  const refreshTokenError = () => {
+    const err = APIError.onlyRefreshTokenIsAllowed();
+    return errorMiddleware.converter(err, req, res, next);
+  };
   try {
     const token = req.headers.authorization;
     if (_.isEmpty(token)) {
       throw APIError.unauthorized();
     }
-    const decoded = jwt.verify(token.split(/\s+/).pop(), jwtTokenSecret);
-    req.user = decoded;
+    const decodedPayload = await auth.verifyToken(token);
+    if (req.headers.refreshToken && decodedPayload.type !== 'refresh')
+      return unauthorized();
+    req.user = decodedPayload;
     return next();
   } catch (error) {
+    logger.error(error)
     return unauthorized();
   }
 };

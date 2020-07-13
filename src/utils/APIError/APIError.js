@@ -144,6 +144,14 @@ class APIError extends ExtendableError {
     });
   }
 
+  static onlyRefreshTokenIsAllowed() {
+    return new APIError({
+      message: 'Request Unauthorized!',
+      status: httpStatus.UNAUTHORIZED,
+      errors: [generateError('UNAUTHORIZED', 'Oops! Something is wrong', 'This Request is supposed to be made with Refresh Token')]
+    });
+  }
+
   static unauthorized() {
     return APIError.withCode('UNAUTHORIZED', httpStatus.UNAUTHORIZED);
   }

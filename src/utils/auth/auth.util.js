@@ -13,7 +13,9 @@ const PRINCIPAL_ID = 'user';
  * @returns {Object} returns object with tokens { token, refreshToken }
  */
 const generateAuthToken = async (payload) => {
+  payload['type'] = 'access'
   const accessToken = sign(payload, { expiresIn: jwtSetting.accessTokenExpiryTime });
+  payload['type'] = 'refresh'
   const refreshToken = sign(payload, { expiresIn: jwtSetting.refreshTokenExpiryTime });
   return { accessToken, refreshToken };
 };
@@ -39,13 +41,13 @@ const verifyToken = async (accessToken) => {
   }
 
   try {
-    return jwt.verify(accessToken, jwtSetting.jwtSecretToken);
+    return jwt.verify(accessToken, jwtSetting.jwtTokenSecret);
   } catch (e) {
     throw APIError.unauthorized();
   }
 };
 
-const sign = (payload, options) => jwt.sign(payload, jwtSetting.jwtSecretToken, options);
+const sign = (payload, options) => jwt.sign(payload, jwtSetting.jwtTokenSecret, options);
 
 /**
  * Function validate accessToken
@@ -110,7 +112,7 @@ const generateAuthDenyPolicy = () => generateAuthPolicy(PRINCIPAL_ID, 'Deny', {}
  * @param {String} dataString     String to be encrypted
  * @returns {String} returns  AES Encrypted String
  */
-const encryptAES = dataString => cryptoJS.AES.encrypt(dataString, jwtSetting.jwtSecretToken).toString();
+const encryptAES = dataString => cryptoJS.AES.encrypt(dataString, jwtSetting.jwtTokenSecret).toString();
 
 /**
  * Decrypts AES Encrypted String

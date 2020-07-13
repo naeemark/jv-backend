@@ -5,7 +5,11 @@ module.exports = {
   path: '/api/v1/refresh',
   type: 'post',
   joiSchema: {
-    body: {},
+    headers: Joi.object({
+      authorization: Joi.string().required(),
+      refreshToken: Joi.bool().default(true),
+      'device-id': Joi.string().min(3).required()
+    }).options({ stripUnknown: true }),
     response: {
       200: {
         description: 'OK',
