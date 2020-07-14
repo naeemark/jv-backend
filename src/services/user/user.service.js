@@ -8,27 +8,16 @@ const { APIError } = require('@utils/APIError');
 
 const registerUser = async (authorization, userData) => {
 
-  const {
-    email,
-    password,
-    name,
-    userType
-  } = userData;
-
+  const { email, password, name, userType } = userData;
   const hashedPassword = auth.sha256(password);
   const { deviceId } = await auth.verifyToken(authorization);
 
   const existingUser = await getUser({ email });
 
   if (existingUser) {
-    // return { authorization, userData, existingUser }
-    // throw APIError.userAlreadyExists();
-    // new Promise(() => { throw APIError.userAlreadyExists(); });    
+    throw APIError.userAlreadyExists();
   } else {
-    const userParams = {
-      email, password: hashedPassword, name, userType
-    };
-    const user = await createUser(userParams);
+    const user = await createUser({ email, password: hashedPassword, name, userType });
     const { accessToken, refreshToken } = await auth.generateAuthToken({ user, deviceId });
     return { accessToken, refreshToken, user };
   }
@@ -36,11 +25,7 @@ const registerUser = async (authorization, userData) => {
 
 
 const loginUser = async (authorization, userData) => {
-
-  const {
-    email,
-    password,
-  } = userData;
+  const { email, password, } = userData;
 
   const hashedPassword = auth.sha256(password);
   const { deviceId } = await auth.verifyToken(authorization);
@@ -52,6 +37,7 @@ const loginUser = async (authorization, userData) => {
     const { accessToken, refreshToken } = await auth.generateAuthToken({ user, deviceId });
     return { accessToken, refreshToken, user };
   }
+  throw APIError.invalidCredentials();
 };
 
 const userService = () => { };

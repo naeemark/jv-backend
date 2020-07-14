@@ -16,8 +16,7 @@ const createUser = async ({ email, name, password, userType }) => {
     return user;
   } catch (error) {
     console.error(error);
-    // throw APIError.unauthorized();
-    return null;
+    throw APIError.unauthorized();
   }
 };
 
@@ -26,13 +25,14 @@ const getUser = async ({ email }) => {
     const entityHashKey = '#JV-USER#';
     const entitySortKey = `#USR-EMAIL#${email}`;
     const user = await User.get({ entityHashKey, entitySortKey });
-    delete user.entityHashKey;
-    delete user.entitySortKey;
-    console.log(user);
+    if (user) {
+      delete user.entityHashKey;
+      delete user.entitySortKey;
+    }
     return user;
   } catch (error) {
     console.error(error);
-    return null;
+    throw APIError.unauthorized();
   }
 };
 

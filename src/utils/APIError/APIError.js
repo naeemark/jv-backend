@@ -8,7 +8,7 @@ const appErrorCode = require('./ErrorCode');
  * @param {String} errTitle       Title
  * @param {String} errDesc        Description
  */
-const generateError = (errorCode, errorTitle, errorDescription) => { errorCode, errorTitle, errorDescription };
+const generateError = (errorCode, errorTitle, errorDescription) => ({ errorCode, errorTitle, errorDescription });
 
 
 /**
@@ -96,11 +96,27 @@ class APIError extends ExtendableError {
     });
   }
 
+  static invalidCredentials() {
+    return new APIError({
+      message: 'Invalid email or password!',
+      status: httpStatus.UNAUTHORIZED,
+      error: generateError('UNAUTHORIZED', 'Invalid Password', 'Wrong password was supplied!')
+    });
+  }
+
   static forbidden() {
     return new APIError({
       message: 'Request forbidden!',
       status: httpStatus.FORBIDDEN,
       error: generateError('FORBIDDEN', 'Oops! Something is wrong', 'This resource is forbidden')
+    });
+  }
+
+  static basRequest() {
+    return new APIError({
+      message: 'Bad Request!',
+      status: httpStatus.BAD_REQUEST,
+      error: generateError('BAD_REQUEST', 'Oops! Something is wrong', 'This is a bad request')
     });
   }
 
@@ -123,7 +139,7 @@ class APIError extends ExtendableError {
 
   static onlyRefreshTokenIsAllowed() {
     return new APIError({
-      message: 'Request Unauthorized!',
+      message: 'Refresh Token is required for this Request!',
       status: httpStatus.UNAUTHORIZED,
       error: generateError('UNAUTHORIZED', 'Oops! Something is wrong', 'This Request is supposed to be made with Refresh Token')
     });
@@ -133,15 +149,16 @@ class APIError extends ExtendableError {
     return APIError.withCode('UNAUTHORIZED', httpStatus.UNAUTHORIZED);
   }
 
-  static withCode(code, status, errorAttibutes) {
+  static withCode(code, status, errorAttributes) {
+    console.error(code);
     const errorCode = code && appErrorCode[code] ? code : 'UNSPECIFIED';
     const _error = appErrorCode[errorCode];
-    const errAttributes = errorAttibutes || {};
+    const errAttributes = errorAttributes || {};
     if (errorCode === 'UNSPECIFIED') {
       errAttributes.missingCode = code;
     }
-    const errors = generateError(errorCode, _error.errTitle, _error.errDesc);
-    return new APIError({ message: _error.errTitle, status: status || 400, errors });
+    const error = generateError(errorCode, _error.errTitle, _error.errDesc);
+    return new APIError({ message: _error.errTitle, status: status || 400, error });
   }
 }
 

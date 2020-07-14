@@ -3,10 +3,8 @@
  *
  */
 const _ = require('lodash');
-const jwt = require('jsonwebtoken');
 const { APIError } = require('@utils/APIError');
 const { errorMiddleware } = require('@middlewares/error');
-const { jwtTokenSecret } = require('@config/vars');
 const { auth } = require('@utils/auth');
 const { logger } = require('@utils/logger');
 
@@ -27,13 +25,12 @@ const authMiddleware = async (req, res, next) => {
   };
   try {
     const token = req.headers.authorization;
-    console.log(token);
     if (_.isEmpty(token)) {
       throw APIError.unauthorized();
     }
     const decodedPayload = await auth.verifyToken(token);
     if (req.headers.refreshToken && decodedPayload.type !== 'refresh')
-      return unauthorized();
+      return refreshTokenError();
     req.user = decodedPayload;
     return next();
   } catch (error) {

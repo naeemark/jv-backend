@@ -13,5 +13,35 @@ module.exports = {
     errTitle: 'External service getting timed out',
     errDesc: 'Please try again, if problem still persist, please contact web master',
     errDebugDesc: 'External Service not responding in stipulated time'
+  },
+  BAD_REQUEST: {
+    errTitle: 'External service getting timed out',
+    errDesc: 'Please try again, if problem still persist, please contact web master',
+    errDebugDesc: 'External Service not responding in stipulated time'
+  },
+  NOT_FOUND: {
+    errTitle: 'Oops! Something is wrong',
+    errDesc: 'The resource you are looking for does not exist!',
+    errDebugDesc: 'Client with that name is already exist'
+  },
+  EXTERNAL_SERVICE_FAILURE: {
+    errTitle: 'External service failure',
+    errDesc: 'Please try again, if problem still persist, please contact web master',
+    errDebugDesc: 'External Service not responding properly'
+  },
+  FORBIDDEN: {
+    errTitle: 'Access Denied. Missing Authentication Token.',
+    errDesc: 'Missing Authentication Token',
+    errDebugDesc: 'Client with that name is already exist'
+  },
+  UNAUTHORIZED: {
+    errTitle: 'Access Denied. Invalid Session Token',
+    errDesc: 'This name already exist, please choose another name',
+    errDebugDesc: 'Client with that name is already exist'
+  },
+  EXTERNAL_SERVICE_INVALID_RESPONSE: {
+    errTitle: 'Invalid response by external service',
+    errDesc: 'Please try again, if problem still persist, please contact web master',
+    errDebugDesc: 'External Service not responding properly'
   }
 };

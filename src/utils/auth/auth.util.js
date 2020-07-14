@@ -96,18 +96,6 @@ const generateAuthPolicy = (principalId, effect, payload) => {
 };
 
 /**
- * Generates ALLOW Lambda Authorizer Policy
- * @returns {Object} returns AWS Authorizer Policy
- */
-const generateAuthAllowPolicy = () => generateAuthPolicy(PRINCIPAL_ID, 'Allow', {});
-
-/**
- * Generates DENY Lambda Authorizer Policy
- * @returns {Object} returns AWS Authorizer Policy
- */
-const generateAuthDenyPolicy = () => generateAuthPolicy(PRINCIPAL_ID, 'Deny', {});
-
-/**
  * Generates AES Encrypted String
  * @param {String} dataString     String to be encrypted
  * @returns {String} returns  AES Encrypted String
@@ -128,8 +116,6 @@ module.exports = {
   sign,
   isTokenValid,
   sha256,
-  generateAuthAllowPolicy,
-  generateAuthDenyPolicy,
   encryptAES,
   decryptAES
 };

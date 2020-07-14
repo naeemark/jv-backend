@@ -2,10 +2,8 @@ const httpStatus = require('http-status');
 const expressValidation = require('express-validation');
 const _ = require('lodash');
 
-const { APIError, generateError } = require('../../utils/APIError');
-const {
-  getErrorCode, routes, services, codes
-} = require('../../utils/ErrorCode');
+const { APIError, generateError } = require('@utils/APIError');
+const { getErrorCode, routes, services, codes } = require('@utils/ErrorCode');
 
 /**
  * Error handler. Send stacktrace only during development
@@ -16,7 +14,7 @@ const handler = (err, req, res, next) => { // eslint-disable-line
     responseCode: err.status,
     responseMessage: err.message || httpStatus[err.status],
     response: {
-      errors: err.errors,
+      errors: err.error,
       stack: err.stack
     }
   };
@@ -38,30 +36,20 @@ exports.handler = handler;
 
 
 /**
- * Convert Validaton error into APIError
+ * Convert Validation error into APIError
  *
  * @param  {Object} err   Error object
  * @param  {Object} req   Request object
  */
 const convertValidationError = (err, req) => {
-  const formattedErrors = [];
-  err.errors.forEach((error) => {
-    formattedErrors.push(generateError(
-      [req.path.replace('/', '').split('/').join(':'), codes.validationError].join(':'),
-      'We seems to have a problem!',
-      'We have some trouble validating your data - please contact our customer support',
-      error.messages[0],
-      _.omit(error, ['messages'])
-    ));
-  });
-
-  return new APIError({
-    message: 'Validation error',
-    errors: formattedErrors,
-    route: err.route ? err.route : routes.root,
-    status: err.status,
-    stack: err.stack
-  });
+  const error = generateError(
+    [req.path.replace('/', '').split('/').join(':'), codes.validationError].join(':'),
+    'We seems to have a problem!',
+    'We have some trouble validating your data - please contact our customer support',
+    err.errors[0].messages[0],
+    _.omit(err.errors, ['messages'])
+  )
+  return new APIError({ message: 'Validation error', status: err.status, error });
 };
 
 exports.convertValidationError = convertValidationError;
@@ -71,7 +59,7 @@ exports.convertValidationError = convertValidationError;
  *
  * @param  {Object} err   Error object
  * @param  {Object} req   Request object
- * @oublic
+ * @public
  */
 const convertGenericError = (err, req) => {
   const wrappedError = generateError(
@@ -97,25 +85,15 @@ exports.convertGenericError = convertGenericError;
  *
  * @param  {Object} err   Error object
  * @param  {Object} req   Request object
- * @oublic
+ * @public
  */
 const generateNotFoundError = () => {
-  const errors = [
-    {
-      errorCode: getErrorCode(routes.root, services.route, codes.notFound),
-      errorTitle: 'Oops! We have a problem.',
-      errorDescription: 'We couldn\'t find what you\'re looking for - please contact our administrator!',
-      errorDebugDescription: 'Invalid API route',
-      errorAttributes: {}
-    }
-  ];
-
-  return new APIError({
-    message: 'Not found',
-    errors,
-    route: routes.root,
-    status: httpStatus.NOT_FOUND
-  });
+  const error = {
+    errorCode: getErrorCode(routes.root, services.route, codes.notFound),
+    errorTitle: 'Oops! We have a problem.',
+    errorDescription: 'We couldn\'t find what you\'re looking for - please contact our administrator!'
+  };
+  return new APIError({ message: 'Not found', status: httpStatus.NOT_FOUND, error, });
 };
 
 exports.generateNotFoundError = generateNotFoundError;

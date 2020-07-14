@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const { OK } = require('@utils/helper');
 const { registerUser } = require('@services/user')
 
 /**
@@ -6,21 +7,12 @@ const { registerUser } = require('@services/user')
  * @public
  */
 exports.register = async (req, res, next) => {
-  const authorization = req.headers.authorization;
-  const response = await registerUser(authorization, req.body);
-
-  if (response) {
-    res.status(httpStatus.OK);
-    return res.json({
-      responseCode: httpStatus.OK,
-      responseMessage: 'OK',
-      response: response
-    });
+  try {
+    const authorization = req.headers.authorization;
+    const response = await registerUser(authorization, req.body);
+    return OK(res, 'Register Successful', response);
+  } catch (error) {
+    console.error(error);
+    return next(error);
   }
-  res.status(httpStatus.CONFLICT);
-  return res.json({
-    responseCode: httpStatus.CONFLICT,
-    responseMessage: 'User Already Exists',
-    response: null
-  });
 };

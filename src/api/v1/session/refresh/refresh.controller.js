@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const { OK } = require('@utils/helper');
 const { auth } = require('@utils/auth');
 const logger = require('@utils/logger');
 
@@ -7,14 +8,11 @@ const logger = require('@utils/logger');
  * @public
  */
 exports.refresh = async (req, res, next) => {
-
-  const deviceId = req.headers['device-id'];
-  const response = await auth.generateAuthToken({ deviceId });
-
-  res.status(httpStatus.OK);
-  return res.json({
-    responseCode: httpStatus.OK,
-    responseMessage: 'OK',
-    response: response
-  });
+  try {
+    const deviceId = req.headers['device-id'];
+    const response = await auth.generateAuthToken({ deviceId });
+    return OK(res, 'Refresh Session', response);
+  } catch (error) {
+    return next(error);
+  }
 };
