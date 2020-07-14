@@ -14,7 +14,7 @@ const handler = (err, req, res, next) => { // eslint-disable-line
     responseCode: err.status,
     responseMessage: err.message || httpStatus[err.status],
     response: {
-      errors: err.error,
+      error: err.error,
       stack: err.stack
     }
   };
@@ -60,22 +60,13 @@ exports.convertValidationError = convertValidationError;
  * @public
  */
 const convertGenericError = (err, req) => {
-  const wrappedError = generateError(
+  const error = generateError(
     err.code || [req.path.replace('/', '').split('/').join(':'), codes.unknown].join(':'),
-    'We seems to have a problem!',
-    'Our internal system is having problem, please contact our administrator!',
-    err.message, []
+    'We seem to have a problem!',
+    err.message
   );
-
-  return new APIError({
-    message: 'Internal server error',
-    errors: [wrappedError],
-    route: routes.root,
-    status: httpStatus.INTERNAL_SERVER_ERROR,
-    stack: err.stack
-  });
+  return new APIError({ message: 'Internal server error', status: httpStatus.INTERNAL_SERVER_ERROR, error });
 };
-
 exports.convertGenericError = convertGenericError;
 
 /**
