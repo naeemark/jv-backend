@@ -5,6 +5,9 @@ module.exports = {
   path: '/api/v1/register',
   type: 'post',
   joiSchema: {
+    headers: Joi.object({
+      authorization: Joi.string().required()
+    }).options({ stripUnknown: true }),
     body: Joi.object({
       email: Joi.string().email().required().strict(),
       password: Joi.string().min(6).required().strict(),

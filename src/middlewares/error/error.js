@@ -44,12 +44,10 @@ exports.handler = handler;
 const convertValidationError = (err, req) => {
   const error = generateError(
     [req.path.replace('/', '').split('/').join(':'), codes.validationError].join(':'),
-    'We seems to have a problem!',
-    'We have some trouble validating your data - please contact our customer support',
-    err.errors[0].messages[0],
-    _.omit(err.errors, ['messages'])
+    'Request Validation Error!',
+    err.errors
   )
-  return new APIError({ message: 'Validation error', status: err.status, error });
+  return new APIError({ message: 'Validation Error', status: err.status, error });
 };
 
 exports.convertValidationError = convertValidationError;
