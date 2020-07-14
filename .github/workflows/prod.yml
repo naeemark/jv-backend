@@ -1,4 +1,4 @@
-name: Node.js Build, Test, Deploy
+name: Node.js Build, Test, Deploy to prod
 
 on:
   push:
