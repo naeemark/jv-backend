@@ -7,11 +7,12 @@ const User = require("../../models/User");
 const { APIError } = require('@utils/APIError');
 
 
-const createUser = async ({ email, name, password, userType }) => {
+const createUser = async (userEntity) => {
   try {
-    const entitySortKey = `#USR-EMAIL#${email}`;
-    await User.create({ entitySortKey, email, name, password, userType });
-    const user = await getUser({ email });
+    const email = userEntity.email;
+    userEntity['entitySortKey'] = `#USR-EMAIL#${email}`;
+    await User.create(userEntity);
+    const user = await retrieveUser({ email });
     delete user.password;
     return user;
   } catch (error) {
@@ -20,7 +21,7 @@ const createUser = async ({ email, name, password, userType }) => {
   }
 };
 
-const getUser = async ({ email }) => {
+const retrieveUser = async ({ email }) => {
   try {
     const entityHashKey = '#JV-USER#';
     const entitySortKey = `#USR-EMAIL#${email}`;
@@ -32,10 +33,10 @@ const getUser = async ({ email }) => {
     return user;
   } catch (error) {
     console.error(error);
-    throw APIError.unauthorized();
+    throw APIError.userNotFound();
   }
 };
 
 const repositoryService = () => { };
 
-module.exports = { repositoryService, createUser, getUser };
+module.exports = { repositoryService, createUser, retrieveUser };
