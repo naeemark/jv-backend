@@ -8,7 +8,8 @@ const { APIError } = require('@utils/APIError');
 
 const registerUser = async (authorization, userData) => {
 
-  const { email, password, name, userType } = userData;
+  const { email, password, name, userType, mobile } = userData;
+
   const hashedPassword = auth.sha256(password);
   const { deviceId } = await auth.verifyToken(authorization);
 
@@ -17,7 +18,7 @@ const registerUser = async (authorization, userData) => {
   if (existingUser) {
     throw APIError.userAlreadyExists();
   } else {
-    const user = await createUser({ email, password: hashedPassword, name, userType });
+    const user = await createUser({ email, password: hashedPassword, name, userType, mobile });
     const { accessToken, refreshToken } = await auth.generateAuthToken({ user, deviceId });
     return { accessToken, refreshToken, user };
   }

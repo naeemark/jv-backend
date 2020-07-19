@@ -12,6 +12,7 @@ module.exports = {
       email: Joi.string().email().required().strict(),
       password: Joi.string().min(6).required().strict(),
       name: Joi.string().min(3).required().strict(),
+      mobile: Joi.string().min(6).optional(),
       userType: Joi.string().valid(['Merchant', 'Consumer']).default('Consumer'),
       isActive: Joi.bool().default(true),
       isEmailVerified: Joi.bool().default(false)

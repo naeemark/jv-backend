@@ -7,10 +7,11 @@ const User = require("../../models/User");
 const { APIError } = require('@utils/APIError');
 
 
-const createUser = async ({ email, name, password, userType }) => {
+const createUser = async (userEntity) => {
   try {
-    const entitySortKey = `#USR-EMAIL#${email}`;
-    await User.create({ entitySortKey, email, name, password, userType });
+    const email = userEntity.email;
+    userEntity['entitySortKey'] = `#USR-EMAIL#${email}`;
+    await User.create(userEntity);
     const user = await getUser({ email });
     delete user.password;
     return user;
