@@ -10,7 +10,8 @@ const UserSchema = new Schema({
   mobile: { type: String },
   userType: { type: String },
   isActive: { type: Boolean, default: true },
-  isEmailVerified: { type: Boolean, default: false }
+  isEmailVerified: { type: Boolean, default: false },
+  isMobileVerified: { type: Boolean, default: false }
 }, {
   timestamps: true
 });

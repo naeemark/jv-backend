@@ -56,7 +56,7 @@ class APIError extends ExtendableError {
     });
   }
 
-  static notFound() {
+  static resourceNotFound() {
     return new APIError({
       message: 'Resource not found!',
       status: httpStatus.NOT_FOUND,
@@ -108,7 +108,7 @@ class APIError extends ExtendableError {
     return new APIError({
       message: 'Request forbidden!',
       status: httpStatus.FORBIDDEN,
-      error: generateError('FORBIDDEN', 'Oops! Something is wrong', 'This resource is forbidden')
+      error: generateError('FORBIDDEN', 'Oops! Something is wrong', 'This resource is forbidden for such Authorization')
     });
   }
 

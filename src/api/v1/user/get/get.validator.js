@@ -1,23 +1,11 @@
 const Joi = require('joi');
 
 module.exports = {
-  name: 'register',
-  path: '/api/v1/register',
-  type: 'post',
+  name: 'get',
+  path: '/api/v1/get',
+  type: 'get',
   joiSchema: {
-    headers: Joi.object({
-      authorization: Joi.string().required()
-    }).options({ stripUnknown: true }),
-    body: Joi.object({
-      email: Joi.string().email().required().strict(),
-      password: Joi.string().min(6).required().strict(),
-      name: Joi.string().min(3).required().strict(),
-      mobile: Joi.string().min(10).optional(),
-      userType: Joi.string().valid(['Merchant', 'Consumer']).required(),
-      isActive: Joi.bool().default(true),
-      isEmailVerified: Joi.bool().default(false),
-      isMobileVerified: Joi.bool().default(false)
-    }).options({ stripUnknown: true }),
+    body: {},
     response: {
       200: {
         description: 'OK',

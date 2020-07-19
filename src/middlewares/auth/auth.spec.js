@@ -21,9 +21,9 @@ describe('Middleware - authMiddleware', () => {
     const status = jest.spyOn(res, 'status');
     const json = jest.spyOn(res, 'json');
     return authMiddleware(req, res).then(() => {
-      expect(status).toBeCalledWith(httpStatus.UNAUTHORIZED);
+      expect(status).toBeCalledWith(httpStatus.FORBIDDEN);
       expect(json).toBeCalledWith(expect.objectContaining({
-        responseCode: httpStatus.UNAUTHORIZED,
+        responseCode: httpStatus.FORBIDDEN,
         responseMessage: expect.any(String),
         response: expect.any(Object)
       }));
@@ -37,9 +37,9 @@ describe('Middleware - authMiddleware', () => {
     const status = jest.spyOn(res, 'status');
     const json = jest.spyOn(res, 'json');
     return authMiddleware(req, res).then(() => {
-      expect(status).toBeCalledWith(httpStatus.UNAUTHORIZED);
+      expect(status).toBeCalledWith(httpStatus.FORBIDDEN);
       expect(json).toBeCalledWith(expect.objectContaining({
-        responseCode: httpStatus.UNAUTHORIZED,
+        responseCode: httpStatus.FORBIDDEN,
         responseMessage: expect.any(String),
         response: expect.any(Object)
       }));

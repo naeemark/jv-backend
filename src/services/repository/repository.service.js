@@ -12,7 +12,7 @@ const createUser = async (userEntity) => {
     const email = userEntity.email;
     userEntity['entitySortKey'] = `#USR-EMAIL#${email}`;
     await User.create(userEntity);
-    const user = await getUser({ email });
+    const user = await retrieveUser({ email });
     delete user.password;
     return user;
   } catch (error) {
@@ -21,7 +21,7 @@ const createUser = async (userEntity) => {
   }
 };
 
-const getUser = async ({ email }) => {
+const retrieveUser = async ({ email }) => {
   try {
     const entityHashKey = '#JV-USER#';
     const entitySortKey = `#USR-EMAIL#${email}`;
@@ -33,10 +33,10 @@ const getUser = async ({ email }) => {
     return user;
   } catch (error) {
     console.error(error);
-    throw APIError.unauthorized();
+    throw APIError.userNotFound();
   }
 };
 
 const repositoryService = () => { };
 
-module.exports = { repositoryService, createUser, getUser };
+module.exports = { repositoryService, createUser, retrieveUser };

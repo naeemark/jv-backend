@@ -1,5 +1,4 @@
 const { OK } = require('@utils/helper');
-const httpStatus = require('http-status');
 const { loginUser } = require('@services/user')
 
 /**

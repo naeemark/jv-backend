@@ -30,12 +30,12 @@ module.exports = {
     errDebugDesc: 'External Service not responding properly'
   },
   FORBIDDEN: {
-    errTitle: 'Access Denied. Missing Authentication Token.',
-    errDesc: 'Missing Authentication Token',
+    errTitle: 'Access Denied. Missing `Authorization` Token.',
+    errDesc: 'Missing `Authorization` Token',
     errDebugDesc: 'Client with that name is already exist'
   },
   UNAUTHORIZED: {
-    errTitle: 'Access Denied. Invalid Session Token',
+    errTitle: 'Access Denied. Invalid Authorization',
     errDesc: 'This name already exist, please choose another name',
     errDebugDesc: 'Client with that name is already exist'
   },
