@@ -7,6 +7,7 @@ describe('POST /api/v1/session/refresh', () => {
   let body;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     body = {};
   });
 

@@ -2,9 +2,9 @@
 const service = require('./hello.service');
 
 describe('Service - hello', () => {
-  beforeEach(() => {});
+  beforeEach(() => { jest.useFakeTimers(); });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   it('TODO: should do unit test for ', () => {
     service();

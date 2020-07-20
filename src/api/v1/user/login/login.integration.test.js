@@ -7,6 +7,7 @@ describe('POST /api/v1/user/login', () => {
   let body;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     body = {};
   });
 

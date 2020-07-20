@@ -2,9 +2,9 @@
 const { serverBoot } = require('./server.boot');
 
 describe('Boot - serverBoot', () => {
-  beforeEach(() => {});
+  beforeEach(() => { jest.useFakeTimers(); });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   afterAll(() => {
     process.env.NODE_ENV = 'test';

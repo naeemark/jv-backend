@@ -36,6 +36,7 @@ describe('Middleware - error', () => {
   let endStub;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     statusStub = jest.spyOn(res, 'status');
     jsonStub = jest.spyOn(res, 'json');
     endStub = jest.spyOn(res, 'end');

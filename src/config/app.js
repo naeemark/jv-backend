@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const api = require('../api');
+const api = require('@api');
 const interceptor = require('express-interceptor');
 const { errorMiddleware } = require('@middlewares/error');
 const middlewareMonitoring = require('@middlewares/monitoring');
@@ -23,20 +23,13 @@ app.use(cors());
 // Monitoring
 app.use(middlewareMonitoring);
 
+// Request interceptor
 const finalParagraphInterceptor = interceptor((req, res) => { // eslint-disable-line
   return {
     isInterceptable: () => true,
-    intercept: (body, send) => {
-      try {
-        req.responseBody = JSON.parse(body);
-      } catch (e) {
-        req.responseBody = body;
-      }
-      send(body);
-    }
+    intercept: (body, send) => { try { req.responseBody = JSON.parse(body); } catch (e) { req.responseBody = body; } send(body); }
   };
 });
-
 app.use(finalParagraphInterceptor);
 
 // mount api routes

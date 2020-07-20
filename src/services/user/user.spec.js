@@ -2,7 +2,7 @@
 const service = require('./user.service');
 
 describe('Service - user', () => {
-  beforeEach(() => { });
+  beforeEach(() => { jest.useFakeTimers(); });
 
   afterEach(() => { });
 

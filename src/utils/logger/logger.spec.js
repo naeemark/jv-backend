@@ -12,6 +12,7 @@ describe('Utility - logger', () => {
   let errorSpy;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     infoSpy = jest.spyOn(util.logger, 'info');
     errorSpy = jest.spyOn(util.logger, 'error');
   });

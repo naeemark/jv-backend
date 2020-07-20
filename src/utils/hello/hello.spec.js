@@ -2,9 +2,9 @@
 const util = require('./hello.util');
 
 describe('Utility - hello', () => {
-  beforeEach(() => {});
+  beforeEach(() => { jest.useFakeTimers(); });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   it('TODO: should do unit test for ', () => {
     util();

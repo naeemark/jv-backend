@@ -4,8 +4,8 @@
  */
 
 const responseTime = require('response-time');
-const { logger } = require('../../utils/logger');
-const { serviceName } = require('../../config/vars');
+const { logger } = require('@utils/logger');
+const { serviceName } = require('@config/vars');
 
 const monitoringMiddleware = responseTime((req, res, time) => {
   const now = Date.now();

@@ -150,7 +150,6 @@ class APIError extends ExtendableError {
   }
 
   static withCode(code, status, errorAttributes) {
-    console.error(code);
     const errorCode = code && appErrorCode[code] ? code : 'UNSPECIFIED';
     const _error = appErrorCode[errorCode];
     const errAttributes = errorAttributes || {};

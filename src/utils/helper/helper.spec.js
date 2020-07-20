@@ -5,7 +5,7 @@ const { APIError } = require('@utils/APIError');
 const util = require('./helper.util');
 
 describe('Utility - helper', () => {
-  beforeEach(() => { });
+  beforeEach(() => { jest.useFakeTimers(); });
 
   afterEach(() => { });
 

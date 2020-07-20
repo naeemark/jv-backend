@@ -3,10 +3,11 @@ const request = require('supertest');
 const httpStatus = require('http-status');
 const app = require('@config/app');
 
-describe('POST /api/v1/health', () => {
+describe('GET /api/health', () => {
   let body;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     body = {};
   });
 
@@ -14,7 +15,7 @@ describe('POST /api/v1/health', () => {
 
   it('should integrate api /health', () => {
     return request(app)
-      .get('/api/v1/health')
+      .get('/api/health')
       .send(body)
       .expect(httpStatus.OK)
       .then((res) => {

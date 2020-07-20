@@ -8,7 +8,7 @@ const { authMiddleware } = require('./auth.middleware');
 
 describe('Middleware - authMiddleware', () => {
   const res = new MockRes();
-  beforeEach(() => { });
+  beforeEach(() => { jest.useFakeTimers(); });
 
   afterEach(() => {
     jest.resetAllMocks();

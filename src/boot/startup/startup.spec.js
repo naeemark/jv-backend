@@ -2,9 +2,9 @@
 const { startupBoot } = require('./startup.boot');
 
 describe('Boot - startupBoot', () => {
-  beforeEach(() => {});
+  beforeEach(() => { jest.useFakeTimers(); });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   it('should run startupBoot and pass sequence to next boot task', (done) => {
     const app = {};

@@ -2,7 +2,7 @@
 const service = require('./repository.service');
 
 describe('Service - repository', () => {
-  beforeEach(() => { });
+  beforeEach(() => { jest.useFakeTimers(); });
 
   afterEach(() => { });
 
