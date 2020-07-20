@@ -17,7 +17,7 @@ describe('POST /api/v1/user/register', () => {
     return request(app)
       .post('/api/v1/user/register')
       .send(body)
-      .expect(httpStatus.BAD_REQUEST)
+      .expect(httpStatus.BAD_REQUEST);
   });
 
 

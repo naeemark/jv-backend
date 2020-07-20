@@ -1,5 +1,5 @@
 const { OK } = require('@utils/helper');
-const { getUser } = require('@services/user')
+const { getUser } = require('@services/user');
 
 
 /**
@@ -8,7 +8,7 @@ const { getUser } = require('@services/user')
  */
 exports.get = async (req, res, next) => {
   try {
-    const authorization = req.headers.authorization;
+    const { authorization } = req.headers;
     const response = await getUser(authorization);
     return OK(res, 'Get User', response);
   } catch (error) {

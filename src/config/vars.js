@@ -1,4 +1,4 @@
-const path = require('path');
+require('path');
 
 // import .env variables
 require('dotenv-safe').config();

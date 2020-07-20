@@ -1,7 +1,5 @@
-const httpStatus = require('http-status');
 const { OK } = require('@utils/helper');
 const { auth } = require('@utils/auth');
-const logger = require('@utils/logger');
 
 /**
  * refresh

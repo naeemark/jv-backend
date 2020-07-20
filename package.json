@@ -6,6 +6,8 @@
   "scripts": {
     "start": "cross-env node src/index.js",
     "dev": "NODE_ENV=dev nodemon src/index.js",
+    "lint": "eslint '**/*.js' --ignore-path .gitignore --ignore-pattern internals/scripts",
+    "lint:fix": "yarn lint --fix",
     "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles --coverage --coverageDirectory=coverage"
   },
   "repository": {
@@ -27,6 +29,7 @@
   "homepage": "https://github.com/naeemark/jv-backend",
   "_moduleAliases": {
     "@app": "src",
+    "@api": "src/api",
     "@config": "src/config",
     "@middlewares": "src/middlewares",
     "@services": "src/services",
@@ -59,7 +62,10 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
+    "eslint": "^7.5.0",
+    "eslint-config-astro": "^1.0.8",
     "eslint-import-resolver-module-alias": "^0.1.0",
+    "eslint-plugin-import": "^2.22.0",    
     "jest": "^24.9.0",
     "jest-dom": "^4.0.0",
     "jest-express": "^1.10.1",

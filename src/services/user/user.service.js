@@ -3,12 +3,13 @@
  *
  */
 const { auth } = require('@utils/auth');
-const { retrieveUser, createUser } = require('@services/repository')
+const { retrieveUser, createUser } = require('@services/repository');
 const { APIError } = require('@utils/APIError');
 
 const registerUser = async (authorization, userData) => {
-
-  const { email, password, name, userType, mobile } = userData;
+  const {
+    email, password, name, userType, mobile
+  } = userData;
 
   const hashedPassword = auth.sha256(password);
   const { deviceId } = await auth.verifyToken(authorization);
@@ -18,7 +19,9 @@ const registerUser = async (authorization, userData) => {
   if (existingUser) {
     throw APIError.userAlreadyExists();
   } else {
-    const user = await createUser({ email, password: hashedPassword, name, userType, mobile });
+    const user = await createUser({
+      email, password: hashedPassword, name, userType, mobile
+    });
     const { accessToken, refreshToken } = await auth.generateAuthToken({ user, deviceId });
     return { accessToken, refreshToken, user };
   }
@@ -26,7 +29,7 @@ const registerUser = async (authorization, userData) => {
 
 
 const loginUser = async (authorization, userData) => {
-  const { email, password, } = userData;
+  const { email, password } = userData;
 
   const hashedPassword = auth.sha256(password);
   const { deviceId } = await auth.verifyToken(authorization);
@@ -43,7 +46,6 @@ const loginUser = async (authorization, userData) => {
 
 
 const getUser = async (authorization) => {
-
   const { user } = await auth.verifyToken(authorization);
   if (!user) throw APIError.forbidden();
 
@@ -53,4 +55,6 @@ const getUser = async (authorization) => {
 };
 
 const userService = () => { };
-module.exports = { userService, registerUser, loginUser, getUser };
+module.exports = {
+  userService, registerUser, loginUser, getUser
+};

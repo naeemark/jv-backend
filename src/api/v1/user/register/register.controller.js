@@ -1,6 +1,5 @@
-const httpStatus = require('http-status');
 const { OK } = require('@utils/helper');
-const { registerUser } = require('@services/user')
+const { registerUser } = require('@services/user');
 
 /**
  * register
@@ -8,7 +7,7 @@ const { registerUser } = require('@services/user')
  */
 exports.register = async (req, res, next) => {
   try {
-    const authorization = req.headers.authorization;
+    const { authorization } = req.headers;
     const response = await registerUser(authorization, req.body);
     return OK(res, 'Register Successful', response);
   } catch (error) {

@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const { APIError } = require('@utils/APIError');
 const { clientAuthKey, jwtSetting } = require('@config/vars');
 
-const PRINCIPAL_ID = 'user';
 
 /**
  * Function to generate JWT Tokens
@@ -13,9 +12,9 @@ const PRINCIPAL_ID = 'user';
  * @returns {Object} returns object with tokens { token, refreshToken }
  */
 const generateAuthToken = async (payload) => {
-  payload['type'] = 'access'
+  payload.type = 'access'; // eslint-disable-line
   const accessToken = sign(payload, { expiresIn: jwtSetting.accessTokenExpiryTime });
-  payload['type'] = 'refresh'
+  payload.type = 'refresh'; // eslint-disable-line
   const refreshToken = sign(payload, { expiresIn: jwtSetting.refreshTokenExpiryTime });
   return { accessToken, refreshToken };
 };
@@ -69,31 +68,6 @@ const isTokenValid = (accessToken, timestamp) => {
  * @returns {String} returns Hash
  */
 const sha256 = dataString => cryptoJS.SHA256(dataString).toString(cryptoJS.enc.Base64);
-
-/**
- * Generates Lambda Authorizer Policy
- * @param {String} principalId  PrincipleID
- * @param {String} effect      'Allow' or 'Deny'
- * @param {String} resource     Resource Arn
- * @returns {Object} returns AWS Authorizer Policy
- */
-const generateAuthPolicy = (principalId, effect, payload) => {
-  const authResponse = {};
-  authResponse.principalId = principalId;
-  const policyDocument = {};
-  policyDocument.Version = '2012-10-17';
-  policyDocument.Statement = [];
-  const statementOne = {};
-  statementOne.Action = 'execute-api:Invoke';
-  statementOne.Effect = effect;
-  statementOne.Resource = '*';
-  policyDocument.Statement[0] = statementOne;
-  authResponse.policyDocument = policyDocument;
-
-  authResponse.context = payload;
-
-  return authResponse;
-};
 
 /**
  * Generates AES Encrypted String

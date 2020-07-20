@@ -3,14 +3,14 @@
  *
  */
 
-const User = require("../../models/User");
 const { APIError } = require('@utils/APIError');
+const User = require('../../models/User');
 
 
 const createUser = async (userEntity) => {
   try {
-    const email = userEntity.email;
-    userEntity['entitySortKey'] = `#USR-EMAIL#${email}`;
+    const { email } = userEntity;
+    userEntity.entitySortKey = `#USR-EMAIL#${email}`; // eslint-disable-line
     await User.create(userEntity);
     const user = await retrieveUser({ email });
     delete user.password;

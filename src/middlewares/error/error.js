@@ -1,15 +1,16 @@
 const httpStatus = require('http-status');
 const expressValidation = require('express-validation');
-const _ = require('lodash');
 
 const { APIError, generateError } = require('@utils/APIError');
-const { getErrorCode, routes, services, codes } = require('@utils/ErrorCode');
+const {
+  getErrorCode, routes, services, codes
+} = require('@utils/ErrorCode');
 
 /**
  * Error handler. Send stacktrace only during development
  * @public
  */
-const handler = (err, req, res, next) => { // eslint-disable-line
+const handler = (err, req, res, next) => {
   const response = {
     responseCode: err.status,
     responseMessage: err.message || httpStatus[err.status],
@@ -46,7 +47,7 @@ const convertValidationError = (err, req) => {
     [req.path.replace('/', '').split('/').join(':'), codes.validationError].join(':'),
     'Request Validation Error!',
     err.errors
-  )
+  );
   return new APIError({ message: 'Validation Error', status: err.status, error });
 };
 
@@ -82,7 +83,7 @@ const generateNotFoundError = () => {
     errorTitle: 'Oops! We have a problem.',
     errorDescription: 'We couldn\'t find what you\'re looking for - please contact our administrator!'
   };
-  return new APIError({ message: 'Not found', status: httpStatus.NOT_FOUND, error, });
+  return new APIError({ message: 'Not found', status: httpStatus.NOT_FOUND, error });
 };
 
 exports.generateNotFoundError = generateNotFoundError;

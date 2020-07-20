@@ -1,5 +1,6 @@
-const dynamoose = require("dynamoose");
-const Schema = dynamoose.Schema;
+const dynamoose = require('dynamoose');
+
+const { Schema } = dynamoose;
 
 const UserSchema = new Schema({
   entityHashKey: { type: String, hashKey: true, default: '#JV-USER#' },
@@ -17,4 +18,4 @@ const UserSchema = new Schema({
 });
 
 // Exports
-module.exports = User = dynamoose.model("jv-users", UserSchema);
+module.exports = User = dynamoose.model('jv-users', UserSchema); // eslint-disable-line

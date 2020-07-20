@@ -27,8 +27,8 @@ const options = {
 
 // Adds custom format
 const format = combine(
-  winston.format(info => {
-    info.level = `${info.level.toUpperCase()}:${serviceName}-${env}`
+  winston.format((info) => {
+    info.level = `${info.level.toUpperCase()}:${serviceName}-${env}`; // eslint-disable-line
     return info;
   })()
 );

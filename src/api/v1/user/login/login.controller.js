@@ -1,5 +1,5 @@
 const { OK } = require('@utils/helper');
-const { loginUser } = require('@services/user')
+const { loginUser } = require('@services/user');
 
 /**
  * login
@@ -7,7 +7,7 @@ const { loginUser } = require('@services/user')
  */
 exports.login = async (req, res, next) => {
   try {
-    const authorization = req.headers.authorization;
+    const { authorization } = req.headers;
     const response = await loginUser(authorization, req.body);
     return OK(res, 'Login Successful', response);
   } catch (error) {

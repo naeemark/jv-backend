@@ -17,7 +17,7 @@ describe('POST /api/v1/session/start', () => {
     return request(app)
       .post('/api/v1/session/start')
       .set({
-        'timestamp': '20190612040104',
+        timestamp: '20190612040104',
         'client-app-token': 'xJIv/hKVzX3U1lPHFEp2eCF7py9uEcQmzHRaTfSI3ZM=',
         'device-id': '123'
       })

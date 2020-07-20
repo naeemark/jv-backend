@@ -15,10 +15,10 @@ exports.start = async (req, res, next) => {
     logger.info('SessionInfo', { deviceId, timestamp, clientAppToken });
 
     if (auth.isTokenValid(clientAppToken, timestamp)) {
-      response = await auth.generateAuthToken({ deviceId });
+      const response = await auth.generateAuthToken({ deviceId });
       return OK(res, 'Start Session', response);
     }
-    throw APIError.unauthorizedRequest()
+    throw APIError.unauthorizedRequest();
   } catch (error) {
     return next(error);
   }
