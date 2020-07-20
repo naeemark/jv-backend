@@ -39,11 +39,6 @@ const finalParagraphInterceptor = interceptor((req, res) => { // eslint-disable-
 
 app.use(finalParagraphInterceptor);
 
-//Health status
-const healthRoute = express.Router();
-healthRoute.get('/health', (req, res) => res.send('OK'));
-app.use('/', healthRoute);
-
 // mount api routes
 app.use('/api', api);
 
