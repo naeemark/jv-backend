@@ -30,81 +30,81 @@ describe('Utility - helper', () => {
     expect(apiError.status).toBe(101);
   });
 
-  it('should return the API error with errorCode UNSPECIFIED', () => {
+  it('should return the API error with code UNSPECIFIED', () => {
     const apiError = util.handleApiError({});
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.INTERNAL_SERVER_ERROR);
-    expect(apiError.error.errorCode).toBe('UNSPECIFIED');
+    expect(apiError.error.code).toBe('UNSPECIFIED');
   });
 
-  it('should return the API error with errorcode EXTERNAL_SERVICE_TIMEOUT', () => {
+  it('should return the API error with code EXTERNAL_SERVICE_TIMEOUT', () => {
     const apiError = util.handleApiError({ code: 'ECONNABORTED', request: {} });
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.GATEWAY_TIMEOUT);
-    expect(apiError.error.errorCode).toBe('EXTERNAL_SERVICE_TIMEOUT');
+    expect(apiError.error.code).toBe('EXTERNAL_SERVICE_TIMEOUT');
   });
 
-  it('should return the API error with errorcode EXTERNAL_SERVICE_INVALID_RESPONSE', () => {
+  it('should return the API error with code EXTERNAL_SERVICE_INVALID_RESPONSE', () => {
     const apiError = util.handleApiError({ request: {} });
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.BAD_GATEWAY);
-    expect(apiError.error.errorCode).toBe('EXTERNAL_SERVICE_INVALID_RESPONSE');
+    expect(apiError.error.code).toBe('EXTERNAL_SERVICE_INVALID_RESPONSE');
   });
 
-  it('should return the API error with errorcode UNAUTHORIZED', () => {
+  it('should return the API error with code UNAUTHORIZED', () => {
     const apiError = util.handleApiError({ response: { status: httpStatus.UNAUTHORIZED } });
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.UNAUTHORIZED);
-    expect(apiError.error.errorCode).toBe('UNAUTHORIZED');
+    expect(apiError.error.code).toBe('UNAUTHORIZED');
   });
 
-  it('should return the API error with errorcode FORBIDDEN', () => {
+  it('should return the API error with code FORBIDDEN', () => {
     const apiError = util.handleApiError({ response: { status: httpStatus.FORBIDDEN } });
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.FORBIDDEN);
-    expect(apiError.error.errorCode).toBe('FORBIDDEN');
+    expect(apiError.error.code).toBe('FORBIDDEN');
   });
 
-  it('should return the API error with errorcode NOT_FOUND', () => {
+  it('should return the API error with code NOT_FOUND', () => {
     const apiError = util.handleApiError({ response: { status: httpStatus.NOT_FOUND } });
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.NOT_FOUND);
-    expect(apiError.error.errorCode).toBe('NOT_FOUND');
+    expect(apiError.error.code).toBe('NOT_FOUND');
   });
 
-  it('should return the API error with errorcode EXTERNAL_SERVICE_FAILURE', () => {
+  it('should return the API error with code EXTERNAL_SERVICE_FAILURE', () => {
     const apiError = util.handleApiError({ response: { status: httpStatus.BAD_REQUEST } });
     expect(apiError).toHaveProperty('name');
     expect(apiError).toHaveProperty('error');
     expect(apiError).toHaveProperty('status');
-    expect(apiError.error).toHaveProperty('errorCode');
+    expect(apiError.error).toHaveProperty('code');
     expect(apiError.name).toBe('APIError');
     expect(apiError.status).toBe(httpStatus.BAD_REQUEST);
-    expect(apiError.error.errorCode).toBe('EXTERNAL_SERVICE_FAILURE');
+    expect(apiError.error.code).toBe('EXTERNAL_SERVICE_FAILURE');
   });
 
   it('should generate cacheKey for string', () => {

@@ -1,22 +1,21 @@
 /* eslint-disable arrow-body-style */
 const request = require('supertest');
 const httpStatus = require('http-status');
-const app = require('@config/app');
+const app = require('@app');
 
-describe('POST /api/v1/user/get', () => {
+describe('POST /api/v1/outlets', () => {
   let body;
 
   beforeEach(() => {
-    jest.useFakeTimers();
     body = {};
   });
 
   afterEach(() => { });
 
-  it('should integrate api /user without authorization', () => {
+  it('should integrate api /outlet/create without header', () => {
     return request(app)
-      .get('/api/v1/user')
+      .post('/api/v1/outlets')
       .send(body)
-      .expect(httpStatus.BAD_REQUEST);
+      .expect(httpStatus.FORBIDDEN);
   });
 });

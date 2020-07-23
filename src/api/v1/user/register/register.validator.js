@@ -6,7 +6,7 @@ module.exports = {
   type: 'post',
   joiSchema: {
     headers: Joi.object({
-      authorization: Joi.string().required()
+      'device-id': Joi.string().min(3).required()
     }).options({ stripUnknown: true }),
     body: Joi.object({
       email: Joi.string().email().required().strict(),

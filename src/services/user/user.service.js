@@ -6,13 +6,11 @@ const { auth } = require('@utils/auth');
 const { retrieveUser, createUser } = require('@services/repository');
 const { APIError } = require('@utils/APIError');
 
-const registerUser = async (authorization, userData) => {
+const registerUser = async (deviceId, userData) => {
   const {
     email, password, name, userType, mobile
   } = userData;
-
   const hashedPassword = auth.sha256(password);
-  const { deviceId } = await auth.verifyToken(authorization);
 
   const existingUser = await retrieveUser({ email });
 
@@ -28,11 +26,9 @@ const registerUser = async (authorization, userData) => {
 };
 
 
-const loginUser = async (authorization, userData) => {
+const loginUser = async (deviceId, userData) => {
   const { email, password } = userData;
-
   const hashedPassword = auth.sha256(password);
-  const { deviceId } = await auth.verifyToken(authorization);
 
   const user = await retrieveUser({ email });
 

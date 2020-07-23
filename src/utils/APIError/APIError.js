@@ -8,7 +8,7 @@ const appErrorCode = require('./ErrorCode');
  * @param {String} errTitle       Title
  * @param {String} errDesc        Description
  */
-const generateError = (errorCode, errorTitle, errorDescription) => ({ errorCode, errorTitle, errorDescription });
+const generateError = (code, title, description) => ({ code, title, description });
 
 
 /**
@@ -156,8 +156,8 @@ class APIError extends ExtendableError {
     if (errorCode === 'UNSPECIFIED') {
       errAttributes.missingCode = code;
     }
-    const error = generateError(errorCode, _error.errTitle, _error.errDesc);
-    return new APIError({ message: _error.errTitle, status: status || 400, error });
+    const error = generateError(errorCode, _error.title, _error.description);
+    return new APIError({ message: _error.message || _error.title, status: status || 400, error });
   }
 }
 

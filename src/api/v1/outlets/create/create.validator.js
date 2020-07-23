@@ -1,13 +1,11 @@
 const Joi = require('joi');
 
 module.exports = {
-  name: 'get',
-  path: '/api/v1/get',
-  type: 'get',
+  name: 'create',
+  path: '/api/v1/create',
+  type: 'post',
   joiSchema: {
-    headers: Joi.object({
-      authorization: Joi.string().required()
-    }).options({ stripUnknown: true }),
+    body: {},
     response: {
       200: {
         description: 'OK',

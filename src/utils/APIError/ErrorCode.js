@@ -1,47 +1,39 @@
 module.exports = {
   UNSPECIFIED: {
-    errTitle: 'Error code not specified',
-    errDesc: 'Please try again, if problem still persist, please contact web master',
-    errDebugDesc: 'Error code not specified in the system'
+    title: 'Error code not specified',
+    description: 'Please try again. Error code not specified in the system'
   },
   UNKNOWN: {
-    errTitle: 'Oops...something went wrong',
-    errDesc: 'System is not responding properly',
-    errDebugDesc: 'System is not able to handle the error gracefully'
+    title: 'Oops...something went wrong',
+    description: 'System is not able to handle the error gracefully'
   },
   EXTERNAL_SERVICE_TIMEOUT: {
-    errTitle: 'External service getting timed out',
-    errDesc: 'Please try again, if problem still persist, please contact web master',
-    errDebugDesc: 'External Service not responding in stipulated time'
+    title: 'External service getting timed out',
+    description: 'Please try again, if problem still persist, please contact web master'
   },
   BAD_REQUEST: {
-    errTitle: 'External service getting timed out',
-    errDesc: 'Please try again, if problem still persist, please contact web master',
-    errDebugDesc: 'External Service not responding in stipulated time'
+    title: 'External service getting timed out',
+    description: 'Please try again, if problem still persist, please contact web master'
   },
   NOT_FOUND: {
-    errTitle: 'Oops! Something is wrong',
-    errDesc: 'The resource you are looking for does not exist!',
-    errDebugDesc: 'Client with that name is already exist'
+    title: 'Oops! Something is wrong',
+    description: 'The resource you are looking for does not exist!'
   },
   EXTERNAL_SERVICE_FAILURE: {
-    errTitle: 'External service failure',
-    errDesc: 'Please try again, if problem still persist, please contact web master',
-    errDebugDesc: 'External Service not responding properly'
+    title: 'External service failure',
+    description: 'Please try again, if problem still persist, please contact web master'
   },
   FORBIDDEN: {
-    errTitle: 'Access Denied. Missing `Authorization` Token.',
-    errDesc: 'Missing `Authorization` Token',
-    errDebugDesc: 'Client with that name is already exist'
+    title: 'Access Denied. Missing `Authorization` Token.',
+    description: 'Missing `Authorization` Token'
   },
   UNAUTHORIZED: {
-    errTitle: 'Access Denied. Invalid Authorization',
-    errDesc: 'This name already exist, please choose another name',
-    errDebugDesc: 'Client with that name is already exist'
+    message: 'Provided Authorization Token is not valid',
+    title: 'Access Denied. Invalid Authorization Provided',
+    description: 'Your session has expired. Please refresh or restart session to continue.'
   },
   EXTERNAL_SERVICE_INVALID_RESPONSE: {
-    errTitle: 'Invalid response by external service',
-    errDesc: 'Please try again, if problem still persist, please contact web master',
-    errDebugDesc: 'External Service not responding properly'
+    title: 'Invalid response by external service',
+    description: 'Please try again, if problem still persist, please contact web master'
   }
 };

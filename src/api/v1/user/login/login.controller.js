@@ -7,8 +7,8 @@ const { loginUser } = require('@services/user');
  */
 exports.login = async (req, res, next) => {
   try {
-    const { authorization } = req.headers;
-    const response = await loginUser(authorization, req.body);
+    const deviceId = req.headers['device-id'];
+    const response = await loginUser(deviceId, req.body);
     return OK(res, 'Login Successful', response);
   } catch (error) {
     return next(error);

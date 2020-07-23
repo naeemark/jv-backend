@@ -7,8 +7,8 @@ const { registerUser } = require('@services/user');
  */
 exports.register = async (req, res, next) => {
   try {
-    const { authorization } = req.headers;
-    const response = await registerUser(authorization, req.body);
+    const deviceId = req.headers['device-id'];
+    const response = await registerUser(deviceId, req.body);
     return OK(res, 'Register Successful', response);
   } catch (error) {
     console.error(error);

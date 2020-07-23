@@ -2,7 +2,7 @@ const winston = require('winston');
 const WinstonCloudWatch = require('winston-cloudwatch');
 const sanitizer = require('node-sanitizer');
 const {
-  stage, microserviceName, sanitizedFields
+  stage, serviceName, sanitizedFields
 } = require('@config/vars');
 
 const { combine, colorize, simple } = winston.format;
@@ -24,7 +24,7 @@ const options = {
 // Adds custom format
 const format = combine(
   winston.format((info) => {
-    info.level = `${info.level.toUpperCase()}:${microserviceName}-${stage}`; // eslint-disable-line
+    info.level = `${info.level.toUpperCase()}:${serviceName}-${stage}`; // eslint-disable-line
     return info;
   })()
 );
@@ -32,7 +32,7 @@ const format = combine(
 const transports = [
   new winston.transports.Console(options.console),
   new WinstonCloudWatch({
-    logGroupName: microserviceName,
+    logGroupName: serviceName,
     logStreamName: stage,
     createLogGroup: true,
     createLogStream: true,
@@ -99,7 +99,7 @@ const error = (message, logData) => { logger.error(message, logData); };
  * @param {String} methodName   Method's name
  */
 const captureError = (title, err, methodName) => {
-  const logData = { microserviceName, methodName, error: err.message };
+  const logData = { serviceName, methodName, error: err.message };
   if (err.stack) { logData.stack = err.stack; }
   logger.error(title, logData);
 };

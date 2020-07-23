@@ -1,15 +1,16 @@
 const express = require('express');
 const validate = require('express-validation');
-const controller = require('./login.controller');
-const validator = require('./login.validator');
+const { authMiddleware } = require('@middlewares/auth');
+const controller = require('./create.controller');
+const validator = require('./create.validator');
 
 const router = express.Router();
 
 /**
- * @api {post} api/v1/login login
- * @apiDescription Login w/ Email and Password
+ * @api {post} api/v1/create create
+ * @apiDescription Creates a new Outlet
  * @apiVersion 1.0.0
- * @apiName login
+ * @apiName create
  * @apiPermission public
  *
  * @apiParam  {String} [param]  Put some parameter schema here
@@ -21,6 +22,6 @@ const router = express.Router();
  * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
  */
 router.route('/')
-  .post(validate(validator.joiSchema), controller.login);
+  .post(validate(validator.joiSchema), authMiddleware, controller.create);
 
 module.exports = router;
