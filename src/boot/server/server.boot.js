@@ -8,7 +8,7 @@ const { port, env } = require('@config/vars');
 
 const serverBoot = (app, next) => {
   logger.info('Starting server...');
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV !== 'testing') {
     app.listen(port, () => {
       logger.info(`Server started on port ${port} (${env})`);
       next();

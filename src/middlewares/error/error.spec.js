@@ -153,7 +153,7 @@ describe('Middleware - error', () => {
   it('handler middleware should return error without error stack', () => {
     const err = new Error();
     err.status = httpStatus.INTERNAL_SERVER_ERROR;
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = 'testing';
     handler(err, req, res);
 
     expect(statusStub).toBeCalledWith(httpStatus.INTERNAL_SERVER_ERROR);

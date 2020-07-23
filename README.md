@@ -80,6 +80,9 @@ Set environment variables:
 
 ## Distribution ##
 
+### API Documentation
+- https://documenter.getpostman.com/view/1932091/T1DpBGqy
+
 ### Postman Environments
 
 - [DEV](https://www.dropbox.com/s/b9me8a6ufhw0c3o/%5Benv-dev%5D%20jv%20backend.postman_environment.json?dl=0)

@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env node src/index.js",
-    "dev": "NODE_ENV=dev nodemon src/index.js",
+    "dev": "NODE_ENV=development nodemon src/index.js",
     "lint": "eslint '**/*.js' --ignore-path .gitignore --ignore-pattern internals/scripts",
     "lint:fix": "yarn lint --fix",
-    "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles --coverage --coverageDirectory=coverage"
+    "test": "cross-env NODE_ENV=testing jest --forceExit --detectOpenHandles --coverage --coverageDirectory=coverage"
   },
   "repository": {
     "type": "git",

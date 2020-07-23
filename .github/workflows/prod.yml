@@ -29,6 +29,8 @@ jobs:
         run: yarn test
         env:
           PORT: 5000
+          STAGE: test
+          NODE_ENV: testing
           AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
           JWT_SECRET: dummy_secret_goes_here
           JWT_EXPIRATION_TIME: 1h

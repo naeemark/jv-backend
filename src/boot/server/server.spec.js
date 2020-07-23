@@ -7,7 +7,7 @@ describe('Boot - serverBoot', () => {
   afterEach(() => { });
 
   afterAll(() => {
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = 'testing';
   });
 
   it('should not run server during test', (done) => {

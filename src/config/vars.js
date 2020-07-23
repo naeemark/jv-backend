@@ -4,6 +4,7 @@ require('path');
 require('dotenv-safe').config();
 
 module.exports = {
+  stage: process.env.STAGE,
   env: process.env.NODE_ENV,
   port: process.env.PORT,
   serviceName: 'jv-backend',

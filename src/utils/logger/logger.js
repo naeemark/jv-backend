@@ -2,14 +2,10 @@ const winston = require('winston');
 const WinstonCloudWatch = require('winston-cloudwatch');
 const sanitizer = require('node-sanitizer');
 const {
-  env, serviceName, sanitizedFields
+  stage, microserviceName, sanitizedFields
 } = require('@config/vars');
 
-const {
-  combine,
-  colorize,
-  simple
-} = winston.format;
+const { combine, colorize, simple } = winston.format;
 
 const options = {
   console: {
@@ -28,7 +24,7 @@ const options = {
 // Adds custom format
 const format = combine(
   winston.format((info) => {
-    info.level = `${info.level.toUpperCase()}:${serviceName}-${env}`; // eslint-disable-line
+    info.level = `${info.level.toUpperCase()}:${microserviceName}-${stage}`; // eslint-disable-line
     return info;
   })()
 );
@@ -36,8 +32,8 @@ const format = combine(
 const transports = [
   new winston.transports.Console(options.console),
   new WinstonCloudWatch({
-    logGroupName: serviceName,
-    logStreamName: `${process.env.NODE_ENV}-${process.env.POD_NAME}`,
+    logGroupName: microserviceName,
+    logStreamName: stage,
     createLogGroup: true,
     createLogStream: true,
     handleExceptions: true,
@@ -47,10 +43,7 @@ const transports = [
 ];
 
 // instantiate a new Winston Logger with the settings defined above
-const logger = winston.loggers.add(env, {
-  format,
-  transports
-});
+const logger = winston.loggers.add(stage, { format, transports });
 
 // create a stream object with a 'write' function that will be used by `loggerMiddleware`
 logger.stream = {
@@ -76,36 +69,28 @@ logger.streamError = {
  * @param {String} message    Info message
  * @param {Object} logData       Info data
  */
-const debug = (message, logData) => {
-  logger.info(message, logData);
-};
+const debug = (message, logData) => { logger.info(message, logData); };
 
 /**
  * Warn Log
  * @param {String} message       Error message
  * @param {Object} logData       Error data
  */
-const warn = (message, logData) => {
-  logger.error(message, logData);
-};
+const warn = (message, logData) => { logger.error(message, logData); };
 
 /**
  * Info Log
  * @param {String} message    Info message
  * @param {Object} logData       Info data
  */
-const info = (message, logData) => {
-  logger.info(message, logData);
-};
+const info = (message, logData) => { logger.info(message, logData); };
 
 /**
  * Error Log
  * @param {String} message       Error message
  * @param {Object} logData       Error data
  */
-const error = (message, logData) => {
-  logger.error(message, logData);
-};
+const error = (message, logData) => { logger.error(message, logData); };
 
 /**
  * Capture Error
@@ -114,14 +99,8 @@ const error = (message, logData) => {
  * @param {String} methodName   Method's name
  */
 const captureError = (title, err, methodName) => {
-  const logData = {
-    serviceName,
-    methodName,
-    error: err.message
-  };
-  if (err.stack) {
-    logData.stack = err.stack;
-  }
+  const logData = { microserviceName, methodName, error: err.message };
+  if (err.stack) { logData.stack = err.stack; }
   logger.error(title, logData);
 };
 
