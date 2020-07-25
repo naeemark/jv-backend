@@ -9,6 +9,7 @@ module.exports = {
   port: process.env.PORT,
   serviceName: 'jv-backend',
   clientAuthKey: process.env.CLIENT_AUTH_KEY,
+  dynamoTableName: process.env.DYNAMO_TABLE_NAME,
   jwtSetting: {
     accessTokenExpiryTime: process.env.JWT_EXPIRATION_TIME,
     refreshTokenExpiryTime: process.env.JWT_REFRESH_EXPIRATION_TIME,

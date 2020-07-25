@@ -1,4 +1,5 @@
 const dynamoose = require('dynamoose');
+const { dynamoTableName } = require('@config/vars');
 
 const { Schema } = dynamoose;
 
@@ -18,4 +19,4 @@ const UserSchema = new Schema({
 });
 
 // Exports
-module.exports = User = dynamoose.model('jv-users', UserSchema); // eslint-disable-line
+module.exports = User = dynamoose.model(dynamoTableName, UserSchema); // eslint-disable-line
