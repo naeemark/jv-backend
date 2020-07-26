@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-const service = require('./repository.service');
+const service = require('./user.repository.service');
 
 describe('Service - repository', () => {
   beforeEach(() => { jest.useFakeTimers(); });
@@ -7,6 +7,6 @@ describe('Service - repository', () => {
   afterEach(() => { });
 
   it('TODO: should do unit test for ', () => {
-    service.repositoryService();
+    service.retrieve('merchant@jvbackend.com');
   });
 });

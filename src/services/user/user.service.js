@@ -3,7 +3,7 @@
  *
  */
 const { auth } = require('@utils/auth');
-const { retrieveUser, createUser } = require('@services/repository');
+const { userRepository } = require('@services/repository');
 const { APIError } = require('@utils/APIError');
 
 const registerUser = async (deviceId, userData) => {
@@ -12,12 +12,12 @@ const registerUser = async (deviceId, userData) => {
   } = userData;
   const hashedPassword = auth.sha256(password);
 
-  const existingUser = await retrieveUser({ email });
+  const existingUser = await userRepository.retrieve({ email });
 
   if (existingUser) {
     throw APIError.userAlreadyExists();
   } else {
-    const user = await createUser({
+    const user = await userRepository.create({
       email, password: hashedPassword, name, userType, mobile
     });
     const { accessToken, refreshToken } = await auth.generateAuthToken({ user, deviceId });
@@ -30,7 +30,7 @@ const loginUser = async (deviceId, userData) => {
   const { email, password } = userData;
   const hashedPassword = auth.sha256(password);
 
-  const user = await retrieveUser({ email });
+  const user = await userRepository.retrieve({ email });
 
   if (user && user.password === hashedPassword) {
     delete user.password;
@@ -45,7 +45,7 @@ const getUser = async (authorization) => {
   const { user } = await auth.verifyToken(authorization);
   if (!user) throw APIError.forbidden();
 
-  const retrievedUser = await retrieveUser({ email: user.email });
+  const retrievedUser = await userRepository.retrieve({ email: user.email });
   if (retrievedUser) return retrievedUser;
   throw APIError.userNotFound();
 };

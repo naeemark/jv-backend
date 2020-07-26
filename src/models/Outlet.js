@@ -1,20 +1,19 @@
 /**
- * User Model
+ * Outlet Model
  */
 const dynamoose = require('dynamoose');
 const { dynamoTableName } = require('@config/vars');
-const { dbConstants: { userEntityHashKey } } = require('@utils/constants');
+const { dbConstants: { outletEntityHashKey } } = require('@utils/constants');
 
 const { Schema } = dynamoose;
 
 const EntitySchema = new Schema({
-  entityHashKey: { type: String, hashKey: true, default: userEntityHashKey },
+  entityHashKey: { type: String, hashKey: true, default: outletEntityHashKey },
   entitySortKey: { type: String, rangeKey: true },
+  createdBy: { type: String },
   email: { type: String },
-  password: { type: String },
   name: { type: String },
   mobile: { type: String },
-  userType: { type: String },
   isActive: { type: Boolean, default: true },
   isEmailVerified: { type: Boolean, default: false },
   isMobileVerified: { type: Boolean, default: false }

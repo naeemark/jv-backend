@@ -32,6 +32,7 @@
     "@api": "src/api",
     "@config": "src/config",
     "@middlewares": "src/middlewares",
+    "@models": "src/models",
     "@services": "src/services",
     "@utils": "src/utils"
   },
