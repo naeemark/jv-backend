@@ -1,4 +1,6 @@
 const { OK } = require('@utils/helper');
+const { createOutlet } = require('@services/outlet');
+
 
 /**
  * create
@@ -7,7 +9,7 @@ const { OK } = require('@utils/helper');
 exports.create = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    const response = { authorization, body: req.body };
+    const response = await createOutlet(authorization, req.body);
     return OK(res, 'Create Outlet', response);
   } catch (error) {
     return next(error);

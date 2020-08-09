@@ -12,8 +12,8 @@ const create = async (entityObject) => {
   try {
     const { email } = entityObject;
     entityObject.entitySortKey = outletEntitySortKey(email);
-    await Outlet.create(entityObject);
-    return await retrieve({ email });
+    const outlet = Outlet.create(entityObject);
+    return outlet;
   } catch (error) {
     console.error(error);
     throw APIError.unauthorized();

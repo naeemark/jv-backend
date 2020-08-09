@@ -5,9 +5,7 @@ module.exports = {
   path: '/api/v1/get',
   type: 'get',
   joiSchema: {
-    headers: Joi.object({
-      authorization: Joi.string().required()
-    }).options({ stripUnknown: true }),
+    headers: Joi.object({ authorization: Joi.string().required() }).options({ stripUnknown: true }),
     response: {
       200: {
         description: 'OK',

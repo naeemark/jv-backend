@@ -25,7 +25,6 @@ const registerUser = async (deviceId, userData) => {
   }
 };
 
-
 const loginUser = async (deviceId, userData) => {
   const { email, password } = userData;
   const hashedPassword = auth.sha256(password);

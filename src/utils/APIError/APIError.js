@@ -88,6 +88,14 @@ class APIError extends ExtendableError {
     });
   }
 
+  static outletAlreadyExists() {
+    return new APIError({
+      message: 'Outlet already exits!',
+      status: httpStatus.CONFLICT,
+      error: generateError('OUTLET_CONFLICT', 'Oops! Something is wrong', 'The user already have registered an outlet!')
+    });
+  }
+
   static invalidPassword() {
     return new APIError({
       message: 'Password does not match!',

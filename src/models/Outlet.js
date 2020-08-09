@@ -10,13 +10,17 @@ const { Schema } = dynamoose;
 const EntitySchema = new Schema({
   entityHashKey: { type: String, hashKey: true, default: outletEntityHashKey },
   entitySortKey: { type: String, rangeKey: true },
-  createdBy: { type: String },
-  email: { type: String },
   name: { type: String },
   mobile: { type: String },
+  email: { type: String },
+  url: { type: String },
+  seatCapacity: { type: Number },
+  cnic: { type: String },
+  createdBy: { type: String },
   isActive: { type: Boolean, default: true },
   isEmailVerified: { type: Boolean, default: false },
-  isMobileVerified: { type: Boolean, default: false }
+  isMobileVerified: { type: Boolean, default: false },
+  timeTable: { type: Array, schema: [{ type: Object, schema: { day: String, start: String, end: String } }] }
 }, {
   timestamps: true
 });
