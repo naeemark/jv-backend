@@ -9,6 +9,7 @@ const registerUserRoute = require('./user/register');
 const loginRoute = require('./user/login');
 const getUserRoute = require('./user/get');
 const createOutletRoute = require('./outlets/create');
+const readOutletRoute = require('./outlets/read');
 
 
 router.use('/hello', helloRoute);
@@ -21,6 +22,7 @@ router.use('/user/login', loginRoute);
 router.use('/user', getUserRoute);
 
 router.use('/outlets', createOutletRoute);
+router.use('/outlets', readOutletRoute);
 
 
 module.exports = router;

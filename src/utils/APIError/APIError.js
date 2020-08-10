@@ -80,6 +80,14 @@ class APIError extends ExtendableError {
     });
   }
 
+  static entityAlreadyExists() {
+    return new APIError({
+      message: 'Entity already exits!',
+      status: httpStatus.CONFLICT,
+      error: generateError('ENTITY_CONFLICT', 'Oops! Something is wrong', 'Can not create new record with these key attributes!')
+    });
+  }
+
   static userAlreadyExists() {
     return new APIError({
       message: 'User already exits!',
@@ -155,6 +163,10 @@ class APIError extends ExtendableError {
 
   static unauthorized() {
     return APIError.withCode('UNAUTHORIZED', httpStatus.UNAUTHORIZED);
+  }
+
+  static unspecified() {
+    return APIError.withCode();
   }
 
   static withCode(code, status, errorAttributes) {
