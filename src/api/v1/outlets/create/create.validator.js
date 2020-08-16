@@ -1,15 +1,5 @@
 const Joi = require('joi');
 
-const defaultTimeTable = [
-  { day: 'Monday', start: '9:00', end: '18:00' },
-  { day: 'Tuesday', start: '9:00', end: '18:00' },
-  { day: 'Wednesday', start: '9:00', end: '18:00' },
-  { day: 'Thursday', start: '9:00', end: '18:00' },
-  { day: 'Friday', start: '9:00', end: '18:00' },
-  { day: 'Saturday', start: '9:00', end: '18:00' },
-  { day: 'Sunday', start: '9:00', end: '18:00' }
-];
-
 
 module.exports = {
   name: 'create',
@@ -26,7 +16,19 @@ module.exports = {
         .default(1)
         .required(),
       cnic: Joi.string().min(12).max(12).required(),
-      timeTable: Joi.object().default(defaultTimeTable)
+      workingHours: Joi.object({
+        default: Joi.object({
+          start: Joi.string().required().strict(),
+          end: Joi.string().required().strict()
+        }).required(),
+        Monday: Joi.array().default(null),
+        Tuesday: Joi.array().default(null),
+        Wednesday: Joi.array().default(null),
+        Thursday: Joi.array().default(null),
+        Friday: Joi.array().default(null),
+        Saturday: Joi.array().default(null),
+        Sunday: Joi.array().default(null)
+      }).required()
     }).options({ stripUnknown: true }),
     response: {
       200: {
