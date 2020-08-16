@@ -10,6 +10,8 @@ const loginRoute = require('./user/login');
 const getUserRoute = require('./user/get');
 const createOutletRoute = require('./outlets/create');
 const readOutletRoute = require('./outlets/read');
+const updateOutletRoute = require('./outlets/update');
+const deleteOutletRoute = require('./outlets/delete');
 
 
 router.use('/hello', helloRoute);
@@ -23,6 +25,8 @@ router.use('/user', getUserRoute);
 
 router.use('/outlets', createOutletRoute);
 router.use('/outlets', readOutletRoute);
+router.use('/outlets', updateOutletRoute);
+router.use('/outlets', deleteOutletRoute);
 
 
 module.exports = router;

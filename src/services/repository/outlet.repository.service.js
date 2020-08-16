@@ -37,11 +37,28 @@ const read = async ({ createdBy }) => {
       delete item.entitySortKey;
       return item;
     }
-    throw APIError.userNotFound();
+    throw APIError.resourceNotFound();
+  } catch (error) {
+    console.error(error);
+    throw APIError.resourceNotFound();
+  }
+};
+
+const update = async (Item) => {
+  console.log(Item);
+  return { updatedStub: true };
+};
+
+const deleteItem = async ({ createdBy }) => {
+  try {
+    const params = { TableName, Key: { entityHashKey: outletEntityHashKey, entitySortKey: outletEntitySortKey(createdBy) } };
+    await dynamodbService.deleteItem(params);
   } catch (error) {
     console.error(error);
     throw APIError.userNotFound();
   }
 };
 
-module.exports = { create, read };
+module.exports = {
+  create, read, update, delete: deleteItem
+};

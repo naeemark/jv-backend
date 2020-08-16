@@ -33,6 +33,15 @@ const readItem = async (requestParams) => {
   }
 };
 
+const deleteItem = async (requestParams) => {
+  try {
+    await dynamoDbClient.delete(requestParams).promise();
+  } catch (error) {
+    console.error(error);
+    throw APIError.resourceNotFound();
+  }
+};
+
 const queryItem = async (requestParams) => {
   try {
     const data = await dynamoDbClient.query(requestParams).promise();
@@ -44,4 +53,6 @@ const queryItem = async (requestParams) => {
 };
 
 
-module.exports = { createItem, readItem, queryItem };
+module.exports = {
+  createItem, readItem, deleteItem, queryItem
+};
