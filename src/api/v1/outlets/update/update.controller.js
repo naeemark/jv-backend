@@ -11,9 +11,11 @@ exports.update = async (req, res, next) => {
     const { authorization } = req.headers;
     const params = req.body;
 
-    Object.keys(params.workingHours).forEach((key) => {
-      if (params.workingHours[key] === null) params.workingHours[key] = [params.workingHours.default];
-    });
+    if (params.workingHours) {
+      Object.keys(params.workingHours).forEach((key) => {
+        if (params.workingHours[key] === null) params.workingHours[key] = [params.workingHours.default];
+      });
+    }
 
     const response = await updateOutlet(authorization, params);
     return OK(res, 'Update Outlet', response);

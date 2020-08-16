@@ -1,9 +1,9 @@
 /* eslint-disable arrow-body-style */
 
 describe('Test update', () => {
-  beforeEach(() => {});
+  beforeEach(() => { jest.useFakeTimers(); });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   it('TODO: should do unit test for update', () => {
   });

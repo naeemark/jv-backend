@@ -11,8 +11,7 @@ module.exports = {
       mobile: Joi.string().min(10).optional(),
       email: Joi.string().email().strict(),
       url: Joi.string().min(6).strict(),
-      seatCapacity: Joi.number().integer().min(1).max(20)
-        .default(1),
+      seatCapacity: Joi.number().integer().min(1).max(20),
       cnic: Joi.string().min(12).max(12),
       workingHours: Joi.object({
         default: Joi.object({

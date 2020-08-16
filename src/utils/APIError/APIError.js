@@ -88,6 +88,14 @@ class APIError extends ExtendableError {
     });
   }
 
+  static entityNotUpdated() {
+    return new APIError({
+      message: 'Entity not Updated!',
+      status: httpStatus.BAD_REQUEST,
+      error: generateError('BAD_REQUEST', 'Oops! Something is wrong', 'Update request was not successful!')
+    });
+  }
+
   static userAlreadyExists() {
     return new APIError({
       message: 'User already exits!',

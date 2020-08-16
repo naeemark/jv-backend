@@ -8,12 +8,18 @@ const { dbConstants: { outletEntityHashKey, outletEntitySortKey } } = require('@
 const dynamodbService = require('@services/dynamodb');
 const { dynamoTableName: TableName } = require('@config/vars');
 
-
+/**
+ * Creates a new Outlet
+ *
+ * @param {*} Item
+ */
 const create = async (Item) => {
   try {
     const { createdBy } = Item;
     Item.entityHashKey = outletEntityHashKey;
     Item.entitySortKey = outletEntitySortKey(createdBy);
+    Item.createdAt = new Date(new Date().toUTCString()) / 1000;
+    Item.updatedAt = Item.createdAt;
     const requestParams = { TableName, Item };
     const created = await dynamodbService.createItem(requestParams);
     delete created.entityHashKey;
@@ -27,7 +33,10 @@ const create = async (Item) => {
   }
 };
 
-
+/**
+ * Gets the outlet for the user
+ * @param {*} createdBy - Email
+ */
 const read = async ({ createdBy }) => {
   try {
     const params = { TableName, Key: { entityHashKey: outletEntityHashKey, entitySortKey: outletEntitySortKey(createdBy) } };
@@ -44,11 +53,27 @@ const read = async ({ createdBy }) => {
   }
 };
 
+/**
+ * Updates existing Outlet
+ * @param {*} Item
+ */
 const update = async (Item) => {
-  console.log(Item);
-  return { updatedStub: true };
+  try {
+    Item.updatedAt = new Date(new Date().toUTCString()) / 1000;
+    const Key = { entityHashKey: outletEntityHashKey, entitySortKey: outletEntitySortKey(Item.createdBy) };
+    await dynamodbService.updateItem({ TableName, Key, Item });
+  } catch (error) {
+    console.error(error);
+    if (error.status === 409) { throw APIError.entityNotUpdated(); }
+    throw APIError.unspecified();
+    // throw handleDynamoDbError(err, 'DYNAMODB_FAILURE');
+  }
 };
 
+/**
+ * Deletes existing Outlet
+ * @param {*} param - email
+ */
 const deleteItem = async ({ createdBy }) => {
   try {
     const params = { TableName, Key: { entityHashKey: outletEntityHashKey, entitySortKey: outletEntitySortKey(createdBy) } };
