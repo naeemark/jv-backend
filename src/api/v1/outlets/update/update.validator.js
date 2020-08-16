@@ -1,21 +1,18 @@
 const Joi = require('joi');
 
-
 module.exports = {
-  name: 'create',
+  name: 'update',
   path: '/api/v1/outlets',
-  type: 'post',
+  type: 'put',
   joiSchema: {
     headers: Joi.object({ authorization: Joi.string().required() }).options({ stripUnknown: true }),
     body: Joi.object({
-      name: Joi.string().min(2).required().strict(),
+      name: Joi.string().min(2).strict(),
       mobile: Joi.string().min(10).optional(),
-      email: Joi.string().email().required().strict(),
-      url: Joi.string().min(6).required().strict(),
-      seatCapacity: Joi.number().integer().min(1).max(20)
-        .default(1)
-        .required(),
-      cnic: Joi.string().min(12).max(12).required(),
+      email: Joi.string().email().strict(),
+      url: Joi.string().min(6).strict(),
+      seatCapacity: Joi.number().integer().min(1).max(20),
+      cnic: Joi.string().min(12).max(12),
       workingHours: Joi.object({
         default: Joi.object({
           start: Joi.string().required().strict(),
@@ -28,7 +25,7 @@ module.exports = {
         Friday: Joi.array().default(null),
         Saturday: Joi.array().default(null),
         Sunday: Joi.array().default(null)
-      }).required()
+      })
     }).options({ stripUnknown: true }),
     response: {
       200: {

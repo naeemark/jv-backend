@@ -10,7 +10,7 @@ const crypto = require('crypto');
  * @param {any} response                      The response object which needs to send
  * @param {Number} statusCode                 The status code of the request
  */
-const OK = (res, responseMessage = 'OK', response = {}, status = httpStatus.OK) => {
+const OK = (res, responseMessage = 'OK', response = null, status = httpStatus.OK) => {
   res.status(status);
   return res.json({
     responseCode: status,

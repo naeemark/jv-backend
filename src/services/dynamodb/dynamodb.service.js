@@ -33,6 +33,43 @@ const readItem = async (requestParams) => {
   }
 };
 
+
+const updateItem = async (updateParams) => {
+  try {
+    const { TableName, Key, Item } = updateParams;
+    let updateExpression = 'set';
+    const ExpressionAttributeNames = {};
+    const ExpressionAttributeValues = {};
+    Object.keys(Item).forEach((key) => {
+      updateExpression += ` #${key} = :${key} ,`;
+      ExpressionAttributeNames[`#${key}`] = key;
+      ExpressionAttributeValues[`:${key}`] = Item[key];
+    });
+    updateExpression = updateExpression.slice(0, -1);
+    const params = {
+      TableName,
+      Key,
+      UpdateExpression: updateExpression,
+      ExpressionAttributeNames,
+      ExpressionAttributeValues
+    };
+
+    await dynamoDbClient.update(params).promise();
+  } catch (error) {
+    console.error(error);
+    throw APIError.entityNotUpdated();
+  }
+};
+
+const deleteItem = async (requestParams) => {
+  try {
+    await dynamoDbClient.delete(requestParams).promise();
+  } catch (error) {
+    console.error(error);
+    throw APIError.resourceNotFound();
+  }
+};
+
 const queryItem = async (requestParams) => {
   try {
     const data = await dynamoDbClient.query(requestParams).promise();
@@ -44,4 +81,6 @@ const queryItem = async (requestParams) => {
 };
 
 
-module.exports = { createItem, readItem, queryItem };
+module.exports = {
+  createItem, readItem, updateItem, deleteItem, queryItem
+};

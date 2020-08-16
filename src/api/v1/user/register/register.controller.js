@@ -11,7 +11,6 @@ exports.register = async (req, res, next) => {
     const response = await registerUser(deviceId, req.body);
     return OK(res, 'Register Successful', response);
   } catch (error) {
-    console.error(error);
     return next(error);
   }
 };
